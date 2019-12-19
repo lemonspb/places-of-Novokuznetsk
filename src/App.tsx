@@ -2,37 +2,41 @@ import React,{useState} from 'react';
 import './App.scss';
 import Leaflet from 'leaflet'
 import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet'
-import { number } from 'prop-types';
+import ModalMap from './Modal'
 
 
-interface EventTarget{
-  latlng: any
-  
-  
-}
 
 
 const App: React.FC = () => {
-
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
   const [markerLatLng, setMarlerLatLng] = useState<any>([])
   const bounds = Leaflet.latLngBounds(corner1, corner2)
 
   const mapGet = (e:any) =>{
-    console.log(e.latlng)
+
+    console.log(modalOpen)
     let arr= {}
     arr = {
       lat:e.latlng.lat,
       lng:e.latlng.lng
     }
+  
     setMarlerLatLng([...markerLatLng,arr])
   }
-  console.log(markerLatLng)
+
+  const modalClose = () =>{
+    setModalOpen(false)
+  }
+
+  const aaaa = () =>{
+    setModalOpen(true)
+  }
   return (
-    <div className="App">
+    <div className="App" >
      <LeafletMap
-        onClick={mapGet}
+       onClick={mapGet}
         center={[53.757547, 87.136044]}
         zoom={11}
         minZoom={12}
@@ -55,7 +59,7 @@ const App: React.FC = () => {
       {markerLatLng.map((el:any)=>{
         
         return(
-        <Marker position={[el.lat, el.lng]}>
+        <Marker position={[el.lat, el.lng]}  onClick={aaaa}>
           <Popup>
             Popup for any custom information.
           </Popup>
@@ -65,6 +69,7 @@ const App: React.FC = () => {
       })}
        
       </LeafletMap>
+      <ModalMap modalOpen={modalOpen} modalClose={modalClose} />
     </div>
   );
 }
