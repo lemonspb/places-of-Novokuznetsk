@@ -1,22 +1,42 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './App.scss';
 import Leaflet from 'leaflet'
 import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet'
+import { number } from 'prop-types';
+
+
+interface EventTarget{
+  latlng: any
+  
+  
+}
+
+
 const App: React.FC = () => {
 
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
- 
+  const [markerLatLng, setMarlerLatLng] = useState<any>([])
   const bounds = Leaflet.latLngBounds(corner1, corner2)
 
-
+  const mapGet = (e:any) =>{
+    console.log(e.latlng)
+    let arr= {}
+    arr = {
+      lat:e.latlng.lat,
+      lng:e.latlng.lng
+    }
+    setMarlerLatLng([...markerLatLng,arr])
+  }
+  console.log(markerLatLng)
   return (
     <div className="App">
      <LeafletMap
+        onClick={mapGet}
         center={[53.757547, 87.136044]}
         zoom={11}
         minZoom={12}
-        maxZoom={16}
+        maxZoom={18}
         attributionControl={true}
         zoomControl={true}
         doubleClickZoom={true}
@@ -31,11 +51,19 @@ const App: React.FC = () => {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
-       <Marker position={[53.757547, 87.136044]}>
+
+      {markerLatLng.map((el:any)=>{
+        
+        return(
+        <Marker position={[el.lat, el.lng]}>
           <Popup>
             Popup for any custom information.
           </Popup>
         </Marker>
+        )
+
+      })}
+       
       </LeafletMap>
     </div>
   );
