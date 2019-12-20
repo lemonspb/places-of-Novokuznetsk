@@ -1,8 +1,9 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import './App.scss';
 import Leaflet from 'leaflet'
 import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet'
 import ModalMap from './Modal'
+import firebases from './services/base'
 
 
 
@@ -28,10 +29,19 @@ const App: React.FC = () => {
   const modalClose = () =>{
     setModalOpen(false)
   }
-  const getMarkerInfo = (obj:any) =>{
-    setMarkerInfo([...markerInfo,obj])
-  }
+  
+  useEffect(() => {
+   
  
+
+    firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
+        const listUsers = snapshot.val()
+        setMarkerInfo(Object.values(listUsers).map((el:any)=>el))
+        
+        });
+    }, []);
+
+  
   return (
     <div className="App" >
      <LeafletMap
@@ -68,7 +78,7 @@ const App: React.FC = () => {
       }):null}
        
       </LeafletMap>
-      <ModalMap modalOpen={modalOpen} modalClose={modalClose}  latLng={latLng} getMarkerInfo={getMarkerInfo}/>
+      <ModalMap modalOpen={modalOpen} modalClose={modalClose}  latLng={latLng} />
     </div>
   );
 }

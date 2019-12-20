@@ -4,7 +4,6 @@ import firebases from './services/base'
 export interface ModalProp {
     modalOpen:boolean
     modalClose: Function
-    getMarkerInfo:Function
     latLng:any
   }
 
@@ -19,16 +18,22 @@ console.log(firebases)
 
     const handleOk = () =>{
         props.modalClose(false)
-       const markerObject ={
+    
+       const rootRef = firebases.database().ref();
+       const storesRef = rootRef.child("placeNVKZ/" + new Date().toLocaleString());
+       firebases
+       .database()
+       .ref(`/placeNVKZ/`)
+       .push({
         lat:props.latLng.lat,
         lng:props.latLng.lng,
-        text
-       }
-       props.getMarkerInfo(markerObject)
+        text,
+        date: new Date().toLocaleString()
+       });
+
     }
     const  handleChange = (e:any) =>{
         setText(e.target.value)
-        console.log(props.latLng.lat)
     }
 
     return (
