@@ -1,15 +1,17 @@
 import React, { useState,useEffect } from 'react'
-import { Modal } from 'antd';
+import { Modal,Form,Input } from 'antd';
 import firebases from './services/base'
 export interface ModalProp {
     modalOpen:boolean
     modalClose: Function
-    latLng:any
+    latLng:{
+        lat:number,
+        lng: number
+    }
   }
 
 
  const  ModalMap = (props:ModalProp)=>{
-console.log(firebases)
     const  [text, setText] = useState('')
 
     const handleCancel = () =>{
@@ -18,9 +20,7 @@ console.log(firebases)
 
     const handleOk = () =>{
         props.modalClose(false)
-    
-       const rootRef = firebases.database().ref();
-       const storesRef = rootRef.child("placeNVKZ/" + new Date().toLocaleString());
+
        firebases
        .database()
        .ref(`/placeNVKZ/`)
@@ -39,11 +39,12 @@ console.log(firebases)
     return (
       <div>
         <Modal
-          title="Basic Modal"
+          title="Расскажи о месте!"
           visible={props.modalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
          >
+          
              <input type="text"  onChange={handleChange}/>
         </Modal>
       </div>
@@ -51,3 +52,4 @@ console.log(firebases)
   }
 
   export default ModalMap
+  

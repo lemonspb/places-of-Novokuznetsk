@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import './App.scss';
 import Leaflet from 'leaflet'
-import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet'
+import { Map as LeafletMap, TileLayer, Marker, Popup,ZoomControl } from 'react-leaflet'
 import ModalMap from './Modal'
+import SideBar from './Sidebar'
 import firebases from './services/base'
 
 
@@ -11,11 +12,13 @@ import firebases from './services/base'
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [markerInfo, setMarkerInfo]= useState<any>([])
+  const [centerMap, setCenterMap] = useState<any>([53.757547, 87.136044])
+  const [zoomMap, setZoomMap] = useState<number>(11)
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
   const [latLng, setLatLng] = useState<any>([])
   const bounds = Leaflet.latLngBounds(corner1, corner2)
-
+  
   const mapGet = (e:any) =>{
     let arr= {}
     arr = {
@@ -28,12 +31,17 @@ const App: React.FC = () => {
 
   const modalClose = () =>{
     setModalOpen(false)
+ 
+  }
+
+  const goToMarker = (element:any) =>{
+    console.log(element)
+    setCenterMap([element.lat, element.lng])
+    setZoomMap(19)
   }
   
   useEffect(() => {
-   
- 
-
+  
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
         const listUsers = snapshot.val()
         setMarkerInfo(Object.values(listUsers).map((el:any)=>el))
@@ -44,14 +52,15 @@ const App: React.FC = () => {
   
   return (
     <div className="App" >
+      <SideBar goToMarker={goToMarker} />
      <LeafletMap
        onClick={mapGet}
-        center={[53.757547, 87.136044]}
-        zoom={11}
+        center={centerMap}
+        zoom={zoomMap}
         minZoom={12}
-        maxZoom={18}
+        maxZoom={19}
         attributionControl={true}
-        zoomControl={true}
+        zoomControl={false}
         doubleClickZoom={true}
         scrollWheelZoom={true}
         dragging={true}
@@ -60,6 +69,8 @@ const App: React.FC = () => {
         maxBoundsViscosity={1.0}
         maxBounds={bounds}
       >
+        <ZoomControl position="bottomright">
+        </ZoomControl>
         <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
