@@ -19,7 +19,6 @@ console.log(firebases)
 
     const handleOk = () =>{
         props.modalClose(false)
-        console.log(text)
        const markerObject ={
         lat:props.latLng.lat,
         lng:props.latLng.lng,
