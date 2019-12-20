@@ -9,30 +9,29 @@ import ModalMap from './Modal'
 
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [markerInfo, setMarkerInfo]= useState<any>([])
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
-  const [markerLatLng, setMarlerLatLng] = useState<any>([])
+  const [latLng, setLatLng] = useState<any>([])
   const bounds = Leaflet.latLngBounds(corner1, corner2)
 
   const mapGet = (e:any) =>{
-
-    console.log(modalOpen)
     let arr= {}
     arr = {
       lat:e.latlng.lat,
       lng:e.latlng.lng
     }
-  
-    setMarlerLatLng([...markerLatLng,arr])
+    setModalOpen(true)
+    setLatLng(arr)
   }
 
   const modalClose = () =>{
     setModalOpen(false)
   }
-
-  const aaaa = () =>{
-    setModalOpen(true)
+  const getMarkerInfo = (obj:any) =>{
+    setMarkerInfo([...markerInfo,obj])
   }
+ 
   return (
     <div className="App" >
      <LeafletMap
@@ -56,20 +55,20 @@ const App: React.FC = () => {
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
 
-      {markerLatLng.map((el:any)=>{
+      {markerInfo?markerInfo.map((el:any)=>{
         
         return(
-        <Marker position={[el.lat, el.lng]}  onClick={aaaa}>
+        <Marker position={[el.lat, el.lng]} >
           <Popup>
-            Popup for any custom information.
+          {el.text}
           </Popup>
         </Marker>
         )
 
-      })}
+      }):null}
        
       </LeafletMap>
-      <ModalMap modalOpen={modalOpen} modalClose={modalClose} />
+      <ModalMap modalOpen={modalOpen} modalClose={modalClose}  latLng={latLng} getMarkerInfo={getMarkerInfo}/>
     </div>
   );
 }
