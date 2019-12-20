@@ -66,6 +66,7 @@ const App: React.FC = () => {
         dragging={true}
         animate={true}
         easeLinearity={0.35}
+        duration={1}
         maxBoundsViscosity={1.0}
         maxBounds={bounds}
       >
@@ -81,7 +82,11 @@ const App: React.FC = () => {
         return(
         <Marker position={[el.lat, el.lng]} >
           <Popup>
-          {el.text}
+            <h1>{el.place}</h1>
+            <div>
+            {el.text}
+            </div>
+            <div>{el.name}</div>
           </Popup>
         </Marker>
         )

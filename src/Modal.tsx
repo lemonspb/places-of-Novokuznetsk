@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { Modal,Form,Input } from 'antd';
-import firebases from './services/base'
+import firebases from './services/base';
+import  WrappedNormalLoginForm from './FormModal'
 export interface ModalProp {
     modalOpen:boolean
     modalClose: Function
@@ -11,7 +12,7 @@ export interface ModalProp {
   }
 
 
- const  ModalMap = (props:ModalProp)=>{
+ const  ModalMap = (props:any)=>{
     const  [text, setText] = useState('')
 
     const handleCancel = () =>{
@@ -21,20 +22,9 @@ export interface ModalProp {
     const handleOk = () =>{
         props.modalClose(false)
 
-       firebases
-       .database()
-       .ref(`/placeNVKZ/`)
-       .push({
-        lat:props.latLng.lat,
-        lng:props.latLng.lng,
-        text,
-        date: new Date().toLocaleString()
-       });
 
     }
-    const  handleChange = (e:any) =>{
-        setText(e.target.value)
-    }
+ 
 
     return (
       <div>
@@ -44,10 +34,13 @@ export interface ModalProp {
           onOk={handleOk}
           onCancel={handleCancel}
          >
-          
-             <input type="text"  onChange={handleChange}/>
+             
+             <WrappedNormalLoginForm>
+                {props.latLng}
+
+             </WrappedNormalLoginForm>
         </Modal>
-      </div>
+      </div>    
     );
   }
 

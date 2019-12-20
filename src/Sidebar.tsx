@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import firebases from './services/base'
 import './Sidebar.scss'
+import { List } from 'antd';
 
 export interface SidebarProp {
     goToMarker: Function
@@ -22,17 +23,17 @@ export interface SidebarProp {
     return (
       <div className='sidebar'>
         <div className='sidebar__inner'>
-            <div className='sidebar__list sidebar-list'>
-            <div className='sidebar-list__title'> Список Мест</div>
+            <div className='sidebar__list sidebar-list' id='sidebar-scroll'>
+            <div className='sidebar-list__title'> Список Мест</div>     
+    <List size="large">   
             {text.map((el:any)=>{
-   
                  return(
-                <div className='sidebar-list__item' onClick={()=>props.goToMarker(el)}>
-                {el.text}
-            </div>
+                <List.Item className='sidebar-list__item' onClick={()=>props.goToMarker(el)}>
+                {el.place}
+            </List.Item>
               )  
             })}
-            
+            </List>
             </div>
 
         </div>
