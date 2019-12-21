@@ -1,10 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import './App.scss';
+import { Avatar } from 'antd';
 import Leaflet from 'leaflet'
 import { Map as LeafletMap, TileLayer, Marker, Popup,ZoomControl } from 'react-leaflet'
-import ModalMap from './Modal'
-import SideBar from './Sidebar'
-import firebases from './services/base'
+import ModalMap from '../Modal/Modal'
+import Header from '../Header/Header'
+import SideBar from '../../Sidebar'
+import firebases from '../../services/base'
 
 
 
@@ -39,6 +41,11 @@ const App: React.FC = () => {
     setCenterMap([element.lat, element.lng])
     setZoomMap(19)
   }
+
+
+ 
+    
+
   
   useEffect(() => {
   
@@ -52,6 +59,7 @@ const App: React.FC = () => {
   
   return (
     <div className="App" >
+      <Header />
       <SideBar goToMarker={goToMarker} />
      <LeafletMap
        onClick={mapGet}
@@ -82,11 +90,17 @@ const App: React.FC = () => {
         return(
         <Marker position={[el.lat, el.lng]} >
           <Popup>
-            <h1>{el.place}</h1>
-            <div>
+            <div className='popup'>
+            <h1 className='popup__title'>{el.place}</h1>
+            <div className='popup__user-name'> Автор:  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> {el.username}</div>
+            <div className='popup__text'>
             {el.text}
             </div>
-            <div>{el.name}</div>
+             <div className='popup__footer'>
+        
+            <div className='popup__date'> Когда: {el.date}</div>
+            </div>
+            </div>
           </Popup>
         </Marker>
         )

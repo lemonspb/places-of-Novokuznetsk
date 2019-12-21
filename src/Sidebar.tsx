@@ -24,7 +24,7 @@ export interface SidebarProp {
       <div className='sidebar'>
         <div className='sidebar__inner'>
             <div className='sidebar__list sidebar-list' id='sidebar-scroll'>
-            <div className='sidebar-list__title'> Список Мест</div>     
+            <div className='sidebar-list__title'>Места</div>     
     <List size="large">   
             {text.map((el:any)=>{
                  return(

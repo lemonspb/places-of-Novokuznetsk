@@ -1,7 +1,11 @@
 
 import React from 'react'
 import { Form, Icon, Input, Button } from 'antd';
-import firebases from './services/base';
+import firebases from '../../services/base';
+import ru from 'date-fns/locale/ru';
+import { format } from 'date-fns';
+import './FormModal.scss'
+
 
 export interface FormProp {
   
@@ -16,6 +20,10 @@ export interface FormProp {
 
 const FormModal = (props:any) => {
 
+
+  function dateFormat(date:string){ 
+    return format(new Date(date),'d MMMM yyyy',{locale: ru})
+    }
 
  const handleSubmit = (e:any) => {
   e.preventDefault();
@@ -34,7 +42,7 @@ const FormModal = (props:any) => {
      text: values.text,
      username: values.username,
      place:values.place,
-     date: new Date().toLocaleString()
+     date: dateFormat(new Date().toLocaleString())
     });
       }
     });
@@ -43,7 +51,7 @@ const FormModal = (props:any) => {
   return  (
   
   
-      <Form onSubmit={handleSubmit} className="login-form" layout='horizontal'>
+      <Form onSubmit={handleSubmit} className="story-form" layout='horizontal'>
         <Form.Item               
 >
           {props.form.getFieldDecorator('username', {
@@ -75,9 +83,9 @@ const FormModal = (props:any) => {
         
        
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
+        <Form.Item className='story-form__wrap-button'>
+          <Button type="primary" htmlType="submit" className="story-form__button">
+            Готово!
           </Button>
         </Form.Item>
       </Form>

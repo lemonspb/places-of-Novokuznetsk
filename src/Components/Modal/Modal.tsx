@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from 'react'
-import { Modal,Form,Input } from 'antd';
-import firebases from './services/base';
-import  WrappedNormalLoginForm from './FormModal'
+import React, {  } from 'react'
+import { Modal } from 'antd';
+import './Modal.scss'
+import  WrappedNormalLoginForm from '../FormModal/FormModal'
 export interface ModalProp {
     modalOpen:boolean
     modalClose: Function
@@ -12,8 +12,7 @@ export interface ModalProp {
   }
 
 
- const  ModalMap = (props:any)=>{
-    const  [text, setText] = useState('')
+ const  ModalMap = (props:ModalProp)=>{
 
     const handleCancel = () =>{
         props.modalClose(false)
@@ -33,6 +32,7 @@ export interface ModalProp {
           visible={props.modalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
+          className='modal-story'
          >
              
              <WrappedNormalLoginForm>
