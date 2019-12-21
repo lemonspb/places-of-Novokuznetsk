@@ -18,26 +18,20 @@ export interface ModalProp {
         props.modalClose(false)
     }
 
-    const handleOk = () =>{
-        props.modalClose(false)
 
-
-    }
- 
 
     return (
       <div>
         <Modal
           title="Расскажи о месте!"
           visible={props.modalOpen}
-          onOk={handleOk}
           onCancel={handleCancel}
           className='modal-story'
          >
              
              <WrappedNormalLoginForm>
                 {props.latLng}
-
+                {props.modalClose}
              </WrappedNormalLoginForm>
         </Modal>
       </div>    
