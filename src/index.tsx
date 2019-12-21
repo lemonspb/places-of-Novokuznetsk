@@ -4,6 +4,7 @@ import './index.scss';
 import App from './Components/App/App';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
+import 'swiper/css/swiper.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
