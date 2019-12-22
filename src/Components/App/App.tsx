@@ -1,7 +1,8 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import './App.scss';
 import { Avatar } from 'antd';
 import Leaflet from 'leaflet'
+import { AuthContext } from "../Auth/Auth";
 import { Map as LeafletMap, TileLayer, Marker, Popup,ZoomControl } from 'react-leaflet'
 import ModalMap from '../Modal/Modal'
 import Header from '../Header/Header'
@@ -12,6 +13,8 @@ import firebases from '../../services/base'
 
 
 const App: React.FC = () => {
+  const { currentUser } = useContext(AuthContext);
+  console.log(currentUser)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [markerInfo, setMarkerInfo]= useState<any>([])
   const [centerMap, setCenterMap] = useState<any>([53.757547, 87.136044])
@@ -35,32 +38,39 @@ const App: React.FC = () => {
     setModalOpen(false)
  
   }
+  
+  const  changeList =(id:string) =>{
+    console.log([...markerInfo])
+    firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
+      const listUsers = snapshot.val()
+    
+      setMarkerInfo(Object.values(listUsers).map((el:any)=>el).filter((item:any)=>item.id === id))
+      
+      });
+    
+  }
 
   const goToMarker = (element:any) =>{
     console.log(element)
     setCenterMap([element.lat, element.lng])
     setZoomMap(19)
   }
-
-
- 
-    
-
   
   useEffect(() => {
   
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
         const listUsers = snapshot.val()
+      
         setMarkerInfo(Object.values(listUsers).map((el:any)=>el))
         
         });
-    }, []);
+    }, [modalOpen]);
 
   
   return (
     <div className="App" >
       <Header />
-      <SideBar goToMarker={goToMarker} />
+      <SideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
      <LeafletMap
        onClick={mapGet}
         center={centerMap}

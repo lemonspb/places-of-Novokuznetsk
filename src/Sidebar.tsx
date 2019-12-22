@@ -5,6 +5,8 @@ import { List,Avatar  } from 'antd';
 import Swiper from 'react-id-swiper';
 export interface SidebarProp {
   goToMarker: Function
+  changeList: Function
+  listPlace: any
 }
 
 
@@ -14,8 +16,7 @@ const SideBar = (props: SidebarProp) => {
   const params = {
     slidesPerView: 3,
     spaceBetween: 30,
-    rebuildOnUpdate:true
-   
+    shouldSwiperUpdate: true
   }
 
   useEffect(() => {
@@ -25,8 +26,8 @@ const SideBar = (props: SidebarProp) => {
       setPlace(Object.values(listUsers).map((el: any) => el))
 
     });
-  }, []);
-
+    
+  }, [firebases.database()]);
 
 function itemCheck(item:any) {
   
@@ -47,9 +48,9 @@ function itemCheck(item:any) {
           <div className='sidebar-list__title'>Истории</div>
           <div className='sidebar-list__swiper'>
             <Swiper {...params} >
-            {place.filter((item:any) => itemCheck(item.username)).map((el: any) => {
+            {place.filter((item:any) => itemCheck(item.id)).map((el: any) => {
               return (
-               <div className='sidebar-list__user'>
+               <div className='sidebar-list__user' onClick={(()=>props.changeList(el.id))}>
 
                   <Avatar size="large" icon="user" />
                {el.username}
@@ -63,7 +64,7 @@ function itemCheck(item:any) {
         <div className='sidebar__list sidebar-list sidebar-list--place' id='sidebar-scroll'>
           <div className='sidebar-list__title'>Места</div>
           <List size="large">
-            {place.map((el: any) => {
+            {props.listPlace.map((el: any) => {
               return (
                 <List.Item className='sidebar-list__item' onClick={() => props.goToMarker(el)}>
                   {el.place}

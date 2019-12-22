@@ -1,14 +1,16 @@
 
-import React from 'react'
+import React,{useContext} from 'react'
 import { Form, Icon, Input, Button } from 'antd';
 import firebases from '../../services/base';
 import ru from 'date-fns/locale/ru';
 import { format } from 'date-fns';
 import './FormModal.scss'
+import { AuthContext } from "../Auth/Auth";
 
 
 export interface FormProp {
-  
+
+
   latLng:{
       lat:number,
       lng: number
@@ -19,6 +21,8 @@ export interface FormProp {
 
 
 const FormModal = (props:any) => {
+
+  const { currentUser } = useContext(AuthContext);
 
 
   function dateFormat(date:string){ 
@@ -37,10 +41,11 @@ const FormModal = (props:any) => {
     .database()
     .ref(`/placeNVKZ/`)
     .push({
+      id:currentUser.uid,
      lat:props.children[0].lat,
      lng:props.children[0].lng,
      text: values.text,
-     username: values.username,
+     username: currentUser.displayName,
      place:values.place,
      date: dateFormat(new Date().toLocaleString())
     });
@@ -52,17 +57,7 @@ const FormModal = (props:any) => {
   
   
       <Form onSubmit={handleSubmit} className="story-form" layout='horizontal'>
-        <Form.Item               
->
-          {props.form.getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Пожалуйста, напишите свое имя' }],
-          })(
-            <Input
-              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Имя"
-            />,
-          )}
-        </Form.Item>
+    
         <Form.Item>
         
         {props.form.getFieldDecorator('place', {
