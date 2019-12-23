@@ -12,13 +12,22 @@ const EditAccountPage = (props,{ history }) => {
   const { currentUser } = useContext(AuthContext);
 
 
+ function  normFile(e){
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+
+
     const handleEditProfile = (event) =>{
         event.preventDefault();
         props.form.validateFields((err, values) => {
           if (!err) {
+         console.log(values.upload)
          
-          var blob = new Blob([values.upload.file], { type: "image/jpeg" });
-          const avatarStgRef =  firebases.storage().ref("Usuarios/" + currentUser.uid + `/${values.upload.file.name}`).put(blob);
+          const avatarStgRef =  firebases.storage().ref("Usuarios/" + currentUser.uid + `/${values.upload[0].name}`).put(values.upload[0].originFileObj);
           avatarStgRef.then((snapshot)=>{
             snapshot.ref.getDownloadURL().then((url)=>{ 
                 currentUser.updateProfile({
@@ -42,7 +51,6 @@ const EditAccountPage = (props,{ history }) => {
                         
 
                       } 
-                      return <Redirect to="/" />
                       })
 
 
@@ -56,6 +64,8 @@ const EditAccountPage = (props,{ history }) => {
       <Form onSubmit={handleEditProfile} className='form-register' >
      <Form.Item label="Upload" >
           {props.form.getFieldDecorator('upload', {
+             valuePropName: 'fileList',
+             getValueFromEvent: normFile,
           })(
             <Upload name="logo" listType="picture" multiple={true}>
               <Button>
