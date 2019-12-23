@@ -1,5 +1,5 @@
 
-import React,{useContext} from 'react'
+import React,{useContext,useState} from 'react'
 import { Form, Icon, Input, Button } from 'antd';
 import firebases from '../../services/base';
 import ru from 'date-fns/locale/ru';
@@ -23,7 +23,7 @@ export interface FormProp {
 const FormModal = (props:any) => {
 
   const { currentUser } = useContext(AuthContext);
-
+  const [valueabc, setValueabc] = useState()
 
   function dateFormat(date:string){ 
     return format(new Date(date),'d MMMM yyyy',{locale: ru})
@@ -31,11 +31,15 @@ const FormModal = (props:any) => {
 
  const handleSubmit = (e:any) => {
   e.preventDefault();
-  props.children[1](true)
+ 
 
    
     props.form.validateFields((err:any, values:any) => {
+      console.log(props.children[1])
+
       if (!err) {
+          
+        
         console.log('Received values of form: ', values.username);
          firebases
     .database()
@@ -50,6 +54,18 @@ const FormModal = (props:any) => {
      avatar: currentUser.photoURL,
      date: dateFormat(new Date().toLocaleString())
     });
+
+      if(currentUser){
+        props.children[1](true)
+
+        props.form.setFieldsValue({
+          text: '',
+          place: ''
+        });
+      }
+      else{
+        console.log('зарегайся')
+      }
       }
     });
   };
@@ -74,7 +90,7 @@ const FormModal = (props:any) => {
         {props.form.getFieldDecorator('text', {
             rules: [{ required: true, message: 'Пожалуйста расскажите о месте' }],
           })(
-            <Input.TextArea rows={8} placeholder='Расскажите о месте'/>,
+            <Input.TextArea rows={8} placeholder='Расскажите о месте' />,
           )}
         
        

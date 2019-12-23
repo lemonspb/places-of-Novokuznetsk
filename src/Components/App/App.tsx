@@ -25,6 +25,7 @@ const App: React.FC = () => {
   const bounds = Leaflet.latLngBounds(corner1, corner2)
   
   const mapGet = (e:any) =>{
+    console.log('dfd')
     let arr= {}
     arr = {
       lat:e.latlng.lat,
@@ -40,7 +41,6 @@ const App: React.FC = () => {
   }
   
   const  changeList =(id:string) =>{
-    console.log([...markerInfo])
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
       const listUsers = snapshot.val()
     
@@ -51,7 +51,6 @@ const App: React.FC = () => {
   }
 
   const goToMarker = (element:any) =>{
-    console.log(element)
     setCenterMap([element.lat, element.lng])
     setZoomMap(19)
   }
@@ -64,7 +63,7 @@ const App: React.FC = () => {
         setMarkerInfo(Object.values(listUsers).map((el:any)=>el))
         
         });
-    }, [modalOpen]);
+    }, []);
 
   
   return (
@@ -72,14 +71,14 @@ const App: React.FC = () => {
       <Header />
       <SideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
      <LeafletMap
-       onClick={mapGet}
+         onClick={mapGet}
         center={centerMap}
         zoom={zoomMap}
         minZoom={12}
         maxZoom={19}
         attributionControl={true}
         zoomControl={false}
-        doubleClickZoom={true}
+        doubleClickZoom={false}
         scrollWheelZoom={true}
         dragging={true}
         animate={true}

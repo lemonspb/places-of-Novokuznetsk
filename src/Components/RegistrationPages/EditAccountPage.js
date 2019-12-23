@@ -1,7 +1,7 @@
-import React,{useContext} from "react";
+import React,{useContext,useState} from "react";
 import { withRouter,Redirect } from "react-router";
 import firebases from "../../services/base"
-import { Button, Form,Input,Icon,Upload } from 'antd';
+import { Button, Form,Input,Icon,Upload,message } from 'antd';
 import { AuthContext } from "../Auth/Auth";
 
 import './ RegistrationPage.scss'
@@ -10,7 +10,7 @@ import './ RegistrationPage.scss'
 const EditAccountPage = (props,{ history }) => {
 
   const { currentUser } = useContext(AuthContext);
-
+  const [newName, setNewName] =  useState([]);
 
  function  normFile(e){
     console.log('Upload event:', e);
@@ -19,6 +19,28 @@ const EditAccountPage = (props,{ history }) => {
     }
     return e && e.fileList;
   };
+
+
+ const  qwe = () =>{
+  firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
+    const listUsers = snapshot.val()
+    for ( let variable in listUsers) {
+      if(listUsers[variable].id === currentUser.uid){
+        newName.push(variable)
+        setNewName(newName)
+      }
+    }
+    });
+    newName.forEach((el)=>{
+      console.log(el)
+      firebases.database().ref(`placeNVKZ/${el}`).update({
+        username: currentUser.displayName,
+        avatar: currentUser.photoURL
+      }
+      )
+    })
+ } 
+
 
 
     const handleEditProfile = (event) =>{
@@ -39,14 +61,22 @@ const EditAccountPage = (props,{ history }) => {
               });
             });
         });
-                    firebases.auth().onAuthStateChanged((user) => {
-                        if (user) { 
-                          user.updateProfile({
-                            displayName: values.name
-                          })
-                        }
-         
-                        }); 
+
+       
+                    if(values.name.length !== 0){
+                      const user = firebases.auth().currentUser;  
+                        user.updateProfile({
+                          displayName: values.name
+                        })
+       
+                    
+                    
+                 
+                    
+                    }
+                      
+                 
+                        
 
                         
 
@@ -56,18 +86,40 @@ const EditAccountPage = (props,{ history }) => {
 
       
     }
-
+    function beforeUpload(file) {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      if (!isJpgOrPng) {
+        message.error('You can only upload JPG/PNG file!');
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        message.error('Image must smaller than 2MB!');
+      }
+      return isJpgOrPng && isLt2M;
+    }
   
     
 
   return (
+    <>
       <Form onSubmit={handleEditProfile} className='form-register' >
-     <Form.Item label="Upload" >
+     <Form.Item >
           {props.form.getFieldDecorator('upload', {
-             valuePropName: 'fileList',
+             valuePropName: 'file',
              getValueFromEvent: normFile,
+            
+             rules: [{ required: false, message: 'Please input your password!' }],
           })(
-            <Upload name="logo" listType="picture" multiple={true}>
+            <Upload 
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            
+            showUploadList={false}
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            beforeUpload={beforeUpload}
+            multiple={false}
+            >
               <Button>
                 <Icon type="upload" /> Click to upload
               </Button>
@@ -76,7 +128,7 @@ const EditAccountPage = (props,{ history }) => {
         </Form.Item>
       <Form.Item>
       {props.form.getFieldDecorator('name', {
-            rules: [{ required: true, message: 'Please input your password!' }],
+            rules: [{ required: false, message: 'Please input your password!' }],
           })(
             <Input  type="text"
             placeholder="name" />,
@@ -84,6 +136,8 @@ const EditAccountPage = (props,{ history }) => {
       </Form.Item>
       <Button type='primary'  htmlType="submit" >сохранить</Button>
     </Form>
+     <div onClick={qwe}> dfsddsfs</div>
+     </>
   );
 };
 

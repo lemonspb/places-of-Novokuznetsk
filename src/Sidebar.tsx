@@ -54,7 +54,7 @@ function itemCheck(item:any) {
 
                  {el.avatar?<Avatar size="large" src={el.avatar} />:<Avatar size="large" icon="user" />} 
                   
-               {el.username}
+              <span className='sidebar-list__name'>{el.username}</span> 
                </div>  
               )
             })}
