@@ -52,7 +52,8 @@ function itemCheck(item:any) {
               return (
                <div className='sidebar-list__user' onClick={(()=>props.changeList(el.id))}>
 
-                  <Avatar size="large" icon="user" />
+                 {el.avatar?<Avatar size="large" src={el.avatar} />:<Avatar size="large" icon="user" />} 
+                  
                {el.username}
                </div>  
               )

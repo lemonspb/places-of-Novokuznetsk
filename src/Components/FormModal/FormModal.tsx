@@ -47,6 +47,7 @@ const FormModal = (props:any) => {
      text: values.text,
      username: currentUser.displayName,
      place:values.place,
+     avatar: currentUser.photoURL,
      date: dateFormat(new Date().toLocaleString())
     });
       }

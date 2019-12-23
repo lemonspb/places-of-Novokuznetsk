@@ -102,7 +102,7 @@ const App: React.FC = () => {
           <Popup>
             <div className='popup'>
             <h1 className='popup__title'>{el.place}</h1>
-            <div className='popup__user-name'> Автор:  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> {el.username}</div>
+            <div className='popup__user-name'> Автор:  <Avatar src={el.avatar || `https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} /> {el.username}</div>
             <div className='popup__text'>
             {el.text}
             </div>
