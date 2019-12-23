@@ -10,7 +10,7 @@ import firebases from '../../services/base'
   const menu = (
     <Menu>
       <Menu.Item key="1">
-  {currentUser?<Link to='/edit-account' >редактировать</Link>:<Link to='/signup'>Зарегестрироваться</Link>  }
+  {currentUser?<Link to='/edit-account' >редактировать</Link>:<Link to='/signup'>Зарегистрироваться</Link>  }
        
       </Menu.Item>
       <Menu.Item key="2">
