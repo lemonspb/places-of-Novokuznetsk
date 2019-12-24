@@ -43,9 +43,13 @@ const App: React.FC = () => {
   const  changeList =(id:string) =>{
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
       const listUsers = snapshot.val()
-    
+      if(id ===''){
+        setMarkerInfo(Object.values(listUsers).map((el:any)=>el))
+
+      }
+      else{
       setMarkerInfo(Object.values(listUsers).map((el:any)=>el).filter((item:any)=>item.id === id))
-      
+      }
       });
     
   }

@@ -1,11 +1,12 @@
 
 import React,{useContext,useState} from 'react'
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button,Popover } from 'antd';
 import firebases from '../../services/base';
 import ru from 'date-fns/locale/ru';
 import { format } from 'date-fns';
 import './FormModal.scss'
 import { AuthContext } from "../Auth/Auth";
+import { Link } from 'react-router-dom';
 
 
 export interface FormProp {
@@ -23,11 +24,16 @@ export interface FormProp {
 const FormModal = (props:any) => {
 
   const { currentUser } = useContext(AuthContext);
-  const [valueabc, setValueabc] = useState()
+  const [visiblePopup, setVisiblePopup] = useState(false)
 
   function dateFormat(date:string){ 
     return format(new Date(date),'d MMMM yyyy',{locale: ru})
     }
+
+
+const handleVisibleChange = (visible:boolean) =>{
+  setVisiblePopup(visible)
+}
 
  const handleSubmit = (e:any) => {
   e.preventDefault();
@@ -35,7 +41,6 @@ const FormModal = (props:any) => {
 
    
     props.form.validateFields((err:any, values:any) => {
-      console.log(props.children[1])
 
       if (!err) {
           
@@ -96,9 +101,25 @@ const FormModal = (props:any) => {
        
         </Form.Item>
         <Form.Item className='story-form__wrap-button'>
+        {!currentUser?<Popover
+        content={
+          <div> 
+          <div>чтобы оставить записку о месте нужно зарегистрироваться</div>
+        <Link to='/signup'>Регистрация</Link>
+        <Link to='/login'>Войти</Link>
+        </div>
+        }
+        title="Так нельзя"
+        trigger="click"
+        visible={visiblePopup}
+        onVisibleChange={handleVisibleChange}
+      >
           <Button type="primary" htmlType="submit" className="story-form__button">
             Готово!
           </Button>
+          </Popover>:<Button type="primary" htmlType="submit" className="story-form__button">
+            Готово!
+          </Button>}
         </Form.Item>
       </Form>
   )

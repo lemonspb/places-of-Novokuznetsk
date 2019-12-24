@@ -32,7 +32,6 @@ const EditAccountPage = (props,{ history }) => {
     }
     });
     newName.forEach((el)=>{
-      console.log(el)
       firebases.database().ref(`placeNVKZ/${el}`).update({
         username: currentUser.displayName,
         avatar: currentUser.photoURL
