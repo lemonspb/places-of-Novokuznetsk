@@ -1,8 +1,7 @@
-import React,{useState,useEffect,useContext} from 'react';
+import React,{useState,useEffect} from 'react';
 import './App.scss';
 import { Avatar } from 'antd';
 import Leaflet from 'leaflet'
-import { AuthContext } from "../Auth/Auth";
 import { Map as LeafletMap, TileLayer, Marker, Popup,ZoomControl } from 'react-leaflet'
 import ModalMap from '../Modal/Modal'
 import Header from '../Header/Header'
@@ -13,8 +12,6 @@ import firebases from '../../services/base'
 
 
 const App: React.FC = () => {
-  const { currentUser } = useContext(AuthContext);
-  console.log(currentUser)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [markerInfo, setMarkerInfo]= useState<any>([])
   const [centerMap, setCenterMap] = useState<any>([53.757547, 87.136044])
@@ -25,7 +22,6 @@ const App: React.FC = () => {
   const bounds = Leaflet.latLngBounds(corner1, corner2)
   
   const mapGet = (e:any) =>{
-    console.log('dfd')
     let arr= {}
     arr = {
       lat:e.latlng.lat,
@@ -98,10 +94,10 @@ const App: React.FC = () => {
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
 
-      {markerInfo?markerInfo.map((el:any)=>{
+      {markerInfo?markerInfo.map((el:any,i:number)=>{
         
         return(
-        <Marker position={[el.lat, el.lng]} >
+        <Marker position={[el.lat, el.lng]}  key={i}>
           <Popup>
             <div className='popup'>
             <h1 className='popup__title'>{el.place}</h1>

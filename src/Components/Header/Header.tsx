@@ -1,6 +1,6 @@
-import React, { useState,useEffect,useContext } from 'react'
+import React, { useContext } from 'react'
 import './Header.scss'
-import { Menu, Dropdown, Icon,  Avatar } from 'antd';
+import { Menu, Dropdown,  Avatar } from 'antd';
 import { Link } from 'react-router-dom'
 import { AuthContext } from "../Auth/Auth";
 import firebases from '../../services/base'

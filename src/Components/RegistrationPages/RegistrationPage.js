@@ -27,7 +27,7 @@ const SignUp = (props,{ history }) => {
         
     })
    
-  }, [history]);
+  }, [history, props.form]);
 
   if (currentUser) {
 

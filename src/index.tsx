@@ -7,7 +7,7 @@ import WrappedLogIn from './Components/RegistrationPages/LoginPage'
 import WrappedEditAccountPage  from './Components/RegistrationPages/EditAccountPage'
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
-import {BrowserRouter as Router,  Route,Switch, Redirect } from 'react-router-dom';
+import {BrowserRouter as Router,  Route} from 'react-router-dom';
 import {AuthProvider} from './Components/Auth/Auth'
 import 'swiper/css/swiper.css'
 
