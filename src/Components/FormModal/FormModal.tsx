@@ -45,7 +45,7 @@ const handleVisibleChange = (visible:boolean) =>{
       if (!err) {
           
         
-        console.log('Received values of form: ', values.username);
+        console.log('Received values of form: ', values);
          firebases
     .database()
     .ref(`/placeNVKZ/`)
@@ -62,7 +62,7 @@ const handleVisibleChange = (visible:boolean) =>{
 
       if(currentUser){
         props.children[1](true)
-
+          console.log('ох ох')
         props.form.setFieldsValue({
           text: '',
           place: ''

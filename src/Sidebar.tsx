@@ -27,7 +27,7 @@ const SideBar = (props: SidebarProp) => {
 
     });
     
-  }, [firebases.database()]);
+  }, []);
 
 function itemCheck(item:any) {
   
