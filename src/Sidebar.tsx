@@ -67,7 +67,7 @@ function itemCheck(item:any) {
           <List size="large">
             {props.listPlace.map((el: any) => {
               return (
-                <List.Item className='sidebar-list__item' onClick={() => props.goToMarker('')}>
+                <List.Item className='sidebar-list__item' onClick={() => props.goToMarker(el)}>
                   {el.place}
                 </List.Item>
               )

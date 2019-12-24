@@ -27,6 +27,7 @@ import firebases from '../../services/base'
 
     return (
       <div className='header'>
+          <Avatar size="large"  icon='info' className='header__info'  />
           <Dropdown overlay={menu} className='header__dropdown'>
           {currentUser && currentUser.photoURL?<Avatar size="large"  src={currentUser.photoURL} />:<Avatar size="large" icon='user' />} 
 
