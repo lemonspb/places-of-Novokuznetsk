@@ -48,9 +48,9 @@ function itemCheck(item:any) {
           <div className='sidebar-list__title'>Истории</div>
           <div className='sidebar-list__swiper'>
             <Swiper {...params} >
-            {place.filter((item:any) => itemCheck(item.id)).map((el: any) => {
+            {place.filter((item:any) => itemCheck(item.id)).map((el: any,i:number) => {
               return (
-               <div className='sidebar-list__user' onClick={(()=>props.changeList(el.id))}>
+               <div className='sidebar-list__user' onClick={(()=>props.changeList(el.id))} key={i}>
 
                  {el.avatar?<Avatar size="large" src={el.avatar} />:<Avatar size="large" icon="user" />} 
                   
