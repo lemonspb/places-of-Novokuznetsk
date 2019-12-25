@@ -21,7 +21,7 @@ const SignUp = (props,{ history }) => {
         .createUserWithEmailAndPassword(values.email, values.password).catch(function(error) {
         
           setRegisterError('Этот email  уже используется другим аккаунтом!')
-          // ...
+        
         });
       history.push("/");
         

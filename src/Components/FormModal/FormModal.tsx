@@ -37,14 +37,11 @@ const handleVisibleChange = (visible:boolean) =>{
 
  const handleSubmit = (e:any) => {
   e.preventDefault();
- 
-
-   
     props.form.validateFields((err:any, values:any) => {
 
       if (!err) {
           
-        
+        console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid)
         console.log('Received values of form: ', values);
          firebases
     .database()
@@ -67,9 +64,6 @@ const handleVisibleChange = (visible:boolean) =>{
           text: '',
           place: ''
         });
-      }
-      else{
-        console.log('зарегайся')
       }
       }
     });

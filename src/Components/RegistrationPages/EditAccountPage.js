@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { withRouter, Redirect } from "react-router";
+import { withRouter } from "react-router";
 import firebases from "../../services/base"
 import { Button, Form, Input, Icon, Upload, message } from 'antd';
 import { AuthContext } from "../Auth/Auth";
@@ -11,7 +11,7 @@ const EditAccountPage = (props, { history }) => {
 
   const { currentUser } = useContext(AuthContext);
   const [newName, setNewName] = useState([]);
-  const [edituccess, setEditSucsess] = useState(false)
+  // const [editSuccess, setEditSuccess] = useState(false)
   function normFile(e) {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {

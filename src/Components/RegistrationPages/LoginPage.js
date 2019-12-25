@@ -25,7 +25,7 @@ const LogIn = (props,{ history }) => {
           }      
     })
    
-  }, [history]);
+  }, [history,props.form]);
 
   if (currentUser) {
     return <Redirect to="/" />;
@@ -37,7 +37,7 @@ const LogIn = (props,{ history }) => {
       <Form onSubmit={handleSignUp} className='form-register'>
       <Form.Item>
       {props.form.getFieldDecorator('email', {
-            rules: [{ required: true, message: 'Пожалуйста,  придумайте email!' }],
+            rules: [{ required: true, message: 'Пожалуйста,  введите email!' }],
           })(
             
             <Input 
@@ -48,7 +48,7 @@ const LogIn = (props,{ history }) => {
       </Form.Item>
       <Form.Item>
       {props.form.getFieldDecorator('password', {
-             rules: [{ required: true, message: 'Пожалуйста,  придумайте пароль!' }],
+             rules: [{ required: true, message: 'Пожалуйста,  введите пароль!' }],
           })(
             <Input 
             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} 
