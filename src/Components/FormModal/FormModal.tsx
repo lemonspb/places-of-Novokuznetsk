@@ -61,7 +61,7 @@ const handleVisibleChange = (visible:boolean) =>{
      username: currentUser.displayName,
      place:values.place,
      avatar: currentUser.photoURL,
-     date:format(new Date(date),'d MMMM yyyy',{locale: ru})
+     date:format(new Date(),'d MMMM yyyy',{locale: ru})
         }).then(()=>{
       props.children[1](true)
       console.log('ох ох')
