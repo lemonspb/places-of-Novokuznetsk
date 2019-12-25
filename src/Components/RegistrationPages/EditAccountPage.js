@@ -22,22 +22,7 @@ const EditAccountPage = (props,{ history }) => {
 
 
  const  qwe = () =>{
-  firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
-    const listUsers = snapshot.val()
-    for ( let variable in listUsers) {
-      if(listUsers[variable].id === currentUser.uid){
-        newName.push(variable)
-        setNewName(newName)
-      }
-    }
-    });
-    newName.forEach((el)=>{
-      firebases.database().ref(`placeNVKZ/${el}`).update({
-        username: currentUser.displayName,
-        avatar: currentUser.photoURL
-      }
-      )
-    })
+
  } 
 
 
@@ -57,7 +42,24 @@ const EditAccountPage = (props,{ history }) => {
                   firebases.database().ref("Usuarios/" + currentUser.uid).set({
                     "photoUri": url   
                   });
-              });
+              }).then(()=>{
+                firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
+                  const listUsers = snapshot.val()
+                  for ( let variable in listUsers) {
+                    if(listUsers[variable].id === currentUser.uid){
+                      newName.push(variable)
+                      setNewName(newName)
+                    }
+                  }
+                  });
+                  newName.forEach((el)=>{
+                    firebases.database().ref(`placeNVKZ/${el}`).update({
+                      
+                      avatar: currentUser.photoURL
+                    }
+                    )
+                  })
+              })
             });
         });
 
@@ -66,6 +68,22 @@ const EditAccountPage = (props,{ history }) => {
                       const user = firebases.auth().currentUser;  
                         user.updateProfile({
                           displayName: values.name
+                        }).then(()=>{
+                          firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
+                            const listUsers = snapshot.val()
+                            for ( let variable in listUsers) {
+                              if(listUsers[variable].id === currentUser.uid){
+                                newName.push(variable)
+                                setNewName(newName)
+                              }
+                            }
+                            });
+                            newName.forEach((el)=>{
+                              firebases.database().ref(`placeNVKZ/${el}`).update({
+                                username: currentUser.displayName,
+                              }
+                              )
+                            })
                         })
        
                     
@@ -100,7 +118,7 @@ const EditAccountPage = (props,{ history }) => {
     
 
   return (
-    <>
+     <div className='form-wrap'>
       <Form onSubmit={handleEditProfile} className='form-register' >
      <Form.Item >
           {props.form.getFieldDecorator('upload', {
@@ -127,16 +145,18 @@ const EditAccountPage = (props,{ history }) => {
         </Form.Item>
       <Form.Item>
       {props.form.getFieldDecorator('name', {
-            rules: [{ required: false, message: 'Please input your password!' }],
+            rules: [{ required: false }],
           })(
+
             <Input  type="text"
-            placeholder="name" />,
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder=" Введите имя" />,
             )}
       </Form.Item>
       <Button type='primary'  htmlType="submit" >сохранить</Button>
     </Form>
-     <div onClick={qwe}> dfsddsfs</div>
-     </>
+    
+     </div>
   );
 };
 
