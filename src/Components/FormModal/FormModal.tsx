@@ -27,7 +27,7 @@ const FormModal = (props:any) => {
   const [visiblePopup, setVisiblePopup] = useState(false)
 
   function dateFormat(date:string){ 
-    return format(new Date(date),'d MMMM yyyy',{locale: ru})
+    return 
     }
 
 
@@ -41,7 +41,7 @@ const handleVisibleChange = (visible:boolean) =>{
 
   e.preventDefault();
   console.log('2')
-  console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid)
+  console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid,dateFormat(new Date().toLocaleString()))
 
     props.form.validateFields((err:any, values:any) => {
       console.log('3')
@@ -60,7 +60,8 @@ const handleVisibleChange = (visible:boolean) =>{
      text: values.text,
      username: currentUser.displayName,
      place:values.place,
-     avatar: currentUser.photoURL
+     avatar: currentUser.photoURL,
+     date:format(new Date(date),'d MMMM yyyy',{locale: ru})
         }).then(()=>{
       props.children[1](true)
       console.log('ох ох')
