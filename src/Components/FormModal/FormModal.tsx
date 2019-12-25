@@ -37,10 +37,15 @@ const handleVisibleChange = (visible:boolean) =>{
 
  const handleSubmit = (e:any) => {
   console.log('1')
+  console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid,dateFormat(new Date().toLocaleString()))
+
   e.preventDefault();
   console.log('2')
+  console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid,dateFormat(new Date().toLocaleString()))
+
     props.form.validateFields((err:any, values:any) => {
       console.log('3')
+      console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid,dateFormat(new Date().toLocaleString()))
       if (!err) {
         console.log('4')
         console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid,dateFormat(new Date().toLocaleString()))
