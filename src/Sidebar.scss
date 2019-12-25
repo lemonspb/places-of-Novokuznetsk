@@ -29,7 +29,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     &--history{
-        height: 20%;
+        height: 20vh;
         margin-bottom: 20px;
         overflow: hidden;
         .sidebar-list__title{
@@ -37,7 +37,7 @@
         }
     }
     &--place{
-        height: 75%;
+        height: 75vh;
     }
     &__title{
         font-weight: 700;

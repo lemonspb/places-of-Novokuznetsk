@@ -1,17 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './Header.scss'
-import { Menu, Dropdown,  Avatar } from 'antd';
+import { Menu, Dropdown,  Avatar,Popover } from 'antd';
 import { Link } from 'react-router-dom'
 import { AuthContext } from "../Auth/Auth";
 import firebases from '../../services/base'
 
  const  Header  = ()=>{
   const { currentUser } = useContext(AuthContext);
+  const [visiblePopup, setVisiblePopup] = useState(false)
+
+  const handleVisibleChangePopup = () => {
+    setVisiblePopup(!visiblePopup)
+  }
   const menu = (
     <Menu className='header__menu'>
       
       <Menu.Item key="1">
      
+
+
   {currentUser?<Link to='/edit-account' >Редактировать</Link>:<Link to='/signup'>Зарегистрироваться</Link>  }
        
       </Menu.Item>
@@ -24,7 +31,16 @@ import firebases from '../../services/base'
 
     return (
       <div className='header'>
-          <Avatar size="large"  icon='info' className='header__info'  />
+          <Popover
+        content={<div>Тут будет инфа про то что это</div>}
+        title="Помощь"
+        trigger="click"
+        visible={visiblePopup}
+        onVisibleChange={handleVisibleChangePopup}
+      >
+        <Avatar size="large"  icon='info' className='header__info'  />  
+            </Popover>
+          
           <Dropdown overlay={menu} className='header__dropdown'>
             <div className='header__avatar-wrap'>
             {currentUser && currentUser.photoURL?<Avatar size="large"  src={currentUser.photoURL} />:<Avatar size="large" icon='user' />} 
