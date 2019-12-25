@@ -41,7 +41,7 @@ const handleVisibleChange = (visible:boolean) =>{
 
       if (!err) {
           
-        console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid)
+        console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid,dateFormat(new Date().toLocaleString()))
         console.log('Received values of form: ', values);
          firebases
     .database()
@@ -55,16 +55,18 @@ const handleVisibleChange = (visible:boolean) =>{
      place:values.place,
      avatar: currentUser.photoURL,
      date: dateFormat(new Date().toLocaleString())
+    }).then(()=>{
+      props.children[1](true)
+      console.log('ох ох')
+    props.form.setFieldsValue({
+      text: '',
+      place: ''
     });
+    })
 
-      if(currentUser){
-        props.children[1](true)
-          console.log('ох ох')
-        props.form.setFieldsValue({
-          text: '',
-          place: ''
-        });
-      }
+  
+    
+      
       }
     });
   };
