@@ -36,11 +36,13 @@ const handleVisibleChange = (visible:boolean) =>{
 }
 
  const handleSubmit = (e:any) => {
+  console.log('1')
   e.preventDefault();
+  console.log('2')
     props.form.validateFields((err:any, values:any) => {
-
+      console.log('3')
       if (!err) {
-          
+        console.log('4')
         console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid,dateFormat(new Date().toLocaleString()))
         console.log('Received values of form: ', values);
          firebases
