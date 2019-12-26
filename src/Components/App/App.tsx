@@ -7,7 +7,7 @@ import ModalMap from '../Modal/Modal'
 import Header from '../Header/Header'
 import SideBar from '../../Sidebar'
 import firebases from '../../services/base'
-import { AuthContext } from "../Auth/Auth";
+import { AuthContext } from "../Auth/Auth"
 
 
 
@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const bounds = Leaflet.latLngBounds(corner1, corner2)
   const { currentUser } = useContext(AuthContext);
   const mapRef: any = useRef()
+  const markerRef:any = useRef()
   const groupRef: any = useRef()
   const mapGet = (e: any) => {
     let arr = {}
@@ -92,7 +93,9 @@ const App: React.FC = () => {
 
 
   const goToMarker = (element: any) => {
-    setCenterMap(element.latLng)
+    mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat,element.latLng.lng))
+   
+    //setCenterMap(element.latLng)
     setZoomMap(19)
   }
 
@@ -151,7 +154,7 @@ const App: React.FC = () => {
         <FeatureGroup ref={groupRef}>
           {markerInfo ? markerInfo.map((el: any, i: number) => {
             return (
-              <Marker position={[el.latLng.lat, el.latLng.lng]} key={i}>
+              <Marker position={[el.latLng.lat, el.latLng.lng]} key={i} ref={markerRef}>
                 <Popup onOpen={()=>true}>
                   <div className='popup'>
                     <h1 className='popup__title'>{el.place}</h1>
