@@ -10,13 +10,20 @@
         box-shadow: 17px 0 21px hsla(0,0%,62%,.06);
         &__toggle{
             position: absolute;
-            left: 258px;
+            left: 272px;
+            top: 50px;
             cursor: pointer;
-            top: 100px;
+    background: rgba(255, 255, 255, .85);
+        width: 30px;
+    height: 30px;
+    padding: 8px 0;
+    border-radius: 0 4px 4px 0;
+    text-align: center;
+    box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
+    color: #262626;
+    box-sizing: border-box;
             
-            
-            color:#87d068;
-            font-size: 40px;
+       
             &--open{
                 transform: rotate(180deg);
                 animation: historyMenuCloseToggle 1s ease-in-out ;
@@ -25,7 +32,13 @@
                 transform: rotate(0);
 
                 animation: historyMenuOpenToggle 1s ease-in-out ;
-            }
+            
+    }
+    .anticon{
+        position: relative;
+        top:-7px;
+        font-size: 30px;
+    }
         }
         &__inner{
             position: relative;

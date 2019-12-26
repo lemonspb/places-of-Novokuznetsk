@@ -25,13 +25,15 @@ const App: React.FC = () => {
   const { currentUser } = useContext(AuthContext);
   const mapRef: any = useRef()
   const markerRef: any = useRef()
+  const groupRef: any = useRef()
+
+            
   const mapPromise = (array: any) => {
     return new Promise((resolve, reject) => {
       resolve(array)
     })
 
   }
-  const groupRef: any = useRef()
   const mapGet = (e: any) => {
     let arr = {}
     arr = {
@@ -67,28 +69,26 @@ const App: React.FC = () => {
     })
 
   }
-  function isEmpty(obj:any) {
-    return Object.keys(obj).length === 0;
-}
+
 
   const changeList = (id: string) => {
-
+    const group = groupRef.current.leafletElement
+    const map = mapRef.current.leafletElement
 
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
+     
       const listUsers = snapshot.val()
       if (id === '') {
         mapPromise(setMarkerInfo(Object.values(listUsers))).then(() => {
-          const map = mapRef.current.leafletElement
-          const group = groupRef.current.leafletElement
+      
+
           map.fitBounds(group.getBounds())
         })
       }
       else {
         mapPromise(setMarkerInfo(Object.values(listUsers).filter((item: any) => item.id === id))).then(() => {
-              
-        
-            const map = mapRef.current.leafletElement
-            const group = groupRef.current.leafletElement
+          
+
              if(Object.keys(group.getBounds()).length === 0){
               setMarkerInfo(Object.values(listUsers))
              }
