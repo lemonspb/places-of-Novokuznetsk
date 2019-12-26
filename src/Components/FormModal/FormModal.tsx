@@ -36,35 +36,26 @@ const handleVisibleChange = (visible:boolean) =>{
 }
 
  const handleSubmit = (e:any) => {
-  console.log('1')
-  console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid)
+
 
   e.preventDefault();
-  console.log('2')
-  console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid,dateFormat(new Date().toLocaleString()))
 
     props.form.validateFields((err:any, values:any) => {
-      console.log('3')
-      console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid)
       if (!err) {
-        console.log('4')
-        console.log(props.children[0].lat,props.children[0].lng,currentUser.displayName, currentUser.photoURL,currentUser.uid)
-        console.log('Received values of form: ', values);
          firebases
     .database()
     .ref(`/placeNVKZ/`)
     .push({
       id:currentUser.uid,
-     lat:props.children[0].lat,
-     lng:props.children[0].lng,
+     latLng:props.children[0],
      text: values.text,
      username: currentUser.displayName,
      place:values.place,
      avatar: currentUser.photoURL,
-     date:format(new Date(),'d MMMM yyyy',{locale: ru})
+     date:format(new Date(),'d MMMM yyyy',{locale: ru}),
+     dateId: Date.now()
         }).then(()=>{
       props.children[1](true)
-      console.log('ох ох')
     props.form.setFieldsValue({
       text: '',
       place: ''
@@ -79,7 +70,7 @@ const handleVisibleChange = (visible:boolean) =>{
   };
 
   return  (
-  
+  <>
   
       <Form onSubmit={handleSubmit} className="story-form" layout='horizontal'>
     
@@ -125,6 +116,8 @@ const handleVisibleChange = (visible:boolean) =>{
           </Button>}
         </Form.Item>
       </Form>
+       
+       </>
   )
 }
 
