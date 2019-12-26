@@ -67,6 +67,9 @@ const App: React.FC = () => {
     })
 
   }
+  function isEmpty(obj:any) {
+    return Object.keys(obj).length === 0;
+}
 
   const changeList = (id: string) => {
 
@@ -82,11 +85,17 @@ const App: React.FC = () => {
       }
       else {
         mapPromise(setMarkerInfo(Object.values(listUsers).filter((item: any) => item.id === id))).then(() => {
-
+              
         
             const map = mapRef.current.leafletElement
             const group = groupRef.current.leafletElement
-            map.fitBounds(group.getBounds())
+             if(Object.keys(group.getBounds()).length === 0){
+              setMarkerInfo(Object.values(listUsers))
+             }
+             else{
+              map.fitBounds(group.getBounds())
+
+             }
           
 
         })
