@@ -26,9 +26,7 @@ const FormModal = (props:any) => {
   const { currentUser } = useContext(AuthContext);
   const [visiblePopup, setVisiblePopup] = useState(false)
 
-  function dateFormat(date:string){ 
-    return 
-    }
+ 
 
 
 const handleVisibleChange = (visible:boolean) =>{
@@ -103,7 +101,7 @@ const handleVisibleChange = (visible:boolean) =>{
         <Link to='/login'>Войти</Link>
         </div>
         }
-        title="Так нельзя"
+
         trigger="click"
         visible={visiblePopup}
         onVisibleChange={handleVisibleChange}

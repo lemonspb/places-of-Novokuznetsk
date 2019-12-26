@@ -5,7 +5,7 @@
     top: 20px;
     display: flex;
     align-items: center;
-
+    
     &__info.ant-avatar{
             cursor: pointer;
             margin-right: 20px;
@@ -36,4 +36,8 @@
             font-weight: 600;
         }
     }
+}
+.ant-popover{
+    max-width: 250px;
+
 }

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import firebases from './services/base'
+import firebases from '../../services/base'
 import './Sidebar.scss'
-import { List,Avatar  } from 'antd';
+import { List,Avatar,Icon } from 'antd';
 import Swiper from 'react-id-swiper';
+import { Scrollbars } from 'react-custom-scrollbars';
+
 export interface SidebarProp {
   goToMarker: Function
   changeList: Function
@@ -12,11 +14,22 @@ export interface SidebarProp {
 
 const SideBar = (props: SidebarProp) => {
   const [place, setPlace] = useState<any>([])
+  const [closesideBar, setCloseSideBar] = useState(false)
   let tmpArray:any = [];
   const params = {
     slidesPerView: 3,
     spaceBetween: 30,
-    shouldSwiperUpdate: true
+    shouldSwiperUpdate: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    renderPrevButton: () => <div className="swiper-button-prev"><Icon type="left" /></div>,
+    renderNextButton: () => <div className="swiper-button-next"><Icon type="right" /></div>,
+  }
+     
+  const closeSideBar = () =>{
+    setCloseSideBar(!closesideBar)
   }
 
   useEffect(() => {
@@ -43,7 +56,8 @@ function itemCheck(item:any) {
 
   return (
     <div className='sidebar'>
-      <div className='sidebar__inner'>
+       <button onClick={closeSideBar}> закрыть</button>
+      <div className={`sidebar__inner ${closesideBar?'active-menu-true':'active-menu-false'}`}>
         <div className='sidebar__list sidebar-list sidebar-list--history' >
           <div className='sidebar-list__title'>Истории</div>
           <div className='sidebar-list__swiper'>
@@ -65,13 +79,21 @@ function itemCheck(item:any) {
         <div className='sidebar__list sidebar-list sidebar-list--place' id='sidebar-scroll'>
           <div className='sidebar-list__title'>Места <span className='sidebar-list__see-all' onClick={(()=>props.changeList(''))}>Смотреть все</span></div>
           <List size="large">
+          <Scrollbars style={{  height:500 }}
+           autoHide
+           autoHideTimeout={2000}
+           thumbMinSize={30}
+           universal={true}
+          >
             {props.listPlace.map((el:any,i:number) => {
               return (
                 <List.Item className='sidebar-list__item' onClick={() => props.goToMarker(el)} key={i}>
                   {el.place}
+                  
                 </List.Item>
               )
             })}
+            </Scrollbars>
           </List>
         </div>
 

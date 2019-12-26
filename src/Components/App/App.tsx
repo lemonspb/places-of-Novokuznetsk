@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import './App.scss';
-import { Avatar, Button } from 'antd';
+import { Avatar, Button,Icon } from 'antd';
 import Leaflet from 'leaflet'
 import { Map as LeafletMap, TileLayer, Marker, Popup, ZoomControl, FeatureGroup } from 'react-leaflet'
 import ModalMap from '../Modal/Modal'
 import Header from '../Header/Header'
-import SideBar from '../../Sidebar'
+import SideBar from '../SideBar/Sidebar'
 import firebases from '../../services/base'
 import { AuthContext } from "../Auth/Auth"
 
@@ -15,7 +15,7 @@ import { AuthContext } from "../Auth/Auth"
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [markerInfo, setMarkerInfo] = useState<any>([])
-  const [abc, setAbc] = useState<any>([])
+  const [currentUserCommetns, setCurrentUserCommetns] = useState<any>([])
   const [centerMap, setCenterMap] = useState<any>([53.757547, 87.136044])
   const [zoomMap, setZoomMap] = useState<number>(11)
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
@@ -25,6 +25,12 @@ const App: React.FC = () => {
   const { currentUser } = useContext(AuthContext);
   const mapRef: any = useRef()
   const markerRef:any = useRef()
+  const mapPromise = (array:any) =>{
+    return new Promise((resolve, reject) => {
+      resolve(array)
+    })
+
+  }
   const groupRef: any = useRef()
   const mapGet = (e: any) => {
     let arr = {}
@@ -45,7 +51,6 @@ const App: React.FC = () => {
 
     firebases.database().ref('placeNVKZ/').once('value', (snapshot) => {
       const listUsers = snapshot.val()
-      console.log(snapshot)
 
 
       let abc = new Promise((resolve, reject) => {
@@ -53,12 +58,13 @@ const App: React.FC = () => {
         resolve(Object.keys(listUsers).filter(k => listUsers[k].dateId === dateIdComment));
       })
 
+
       abc
-        .then(
-          result => firebases.database().ref(`placeNVKZ/${result}`).remove(),
-        );
+        .then((result) =>{
+          firebases.database().ref(`placeNVKZ/${result}`).remove()});
 
     })
+  
   }
 
   const changeList = (id: string) => {
@@ -67,35 +73,25 @@ const App: React.FC = () => {
 
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
       const listUsers = snapshot.val()
-      let mapBounds = new Promise((resolve, reject) => {
-        resolve(setMarkerInfo(Object.values(listUsers).filter((item: any) => item.id === id)))
-
-      })
       if (id === '') {
-
-        setMarkerInfo(Object.values(listUsers))
-        mapBounds.then(() => {
+        console.log(listUsers)
+        mapPromise(setMarkerInfo(Object.values(listUsers))).then(() => {
           map.fitBounds(group.getBounds())
         })
-
       }
       else {
-
-        mapBounds.then(() => {
+          mapPromise(setMarkerInfo(Object.values(listUsers).filter((item: any) => item.id === id))).then(() => {
           map.fitBounds(group.getBounds())
-        })
-
-
-      }
+        })      
+    }
     });
-
   }
 
 
   const goToMarker = (element: any) => {
-    mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat,element.latLng.lng))
+    // mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat,element.latLng.lng))
    
-    //setCenterMap(element.latLng)
+    setCenterMap(element.latLng)
     setZoomMap(19)
   }
 
@@ -107,18 +103,15 @@ const App: React.FC = () => {
       setMarkerInfo(Object.values(listUsers))
     })
   }, []);
-  useEffect(() => {
 
-    const arr: any = []
-    markerInfo.filter((elem: any) => {
-      if (elem.id === currentUser.uid) {
-        arr.push(elem.dateId)
-        setAbc([...arr])
-      }
-    })
-
-  }, []);
-
+  useEffect( () => {
+    if(currentUser){
+      setCurrentUserCommetns(markerInfo
+      .filter((e:any) => e.id === currentUser.uid)
+      .map((e:any) => e.dateId)
+    );
+    }
+  }, [markerInfo, currentUser]);
 
 
 
@@ -165,7 +158,8 @@ const App: React.FC = () => {
                     <div className='popup__footer'>
 
                       <div className='popup__date'> Когда: {el.date}</div>
-                      {abc.includes(el.dateId) ? <Button onClick={() => { deleteComment(el.dateId) }}>удалить</Button> : 'gbljh'}
+
+                      {currentUser? currentUserCommetns.includes(el.dateId) ? <div onClick={() => { deleteComment(el.dateId) }} className='popup__delete'><Icon type="delete" /></div> : null:''}
 
                     </div>
                   </div>

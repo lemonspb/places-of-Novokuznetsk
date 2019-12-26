@@ -7,10 +7,10 @@
     bottom: 0;
     width: 17rem;
     z-index: 401;
-        background-color: hsla(0,0%,100%,.4);
         box-shadow: 17px 0 21px hsla(0,0%,62%,.06);
 
         &__inner{
+            position: relative;
             height: 100%;
         }
 
@@ -26,10 +26,9 @@
     border-radius: 3px;
     box-shadow: 0 4px 16px 0 rgba(0,0,0,.15);
     transition: background-color .2s ease;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  
     &--history{
-        height: 20vh;
+        height: 20%;
         background: #efc034;
         overflow: hidden;
         .sidebar-list__title{
@@ -37,7 +36,7 @@
         }
     }
     &--place{
-        height: 80vh;
+        height: 80%;
         
 
     }
@@ -56,6 +55,27 @@
     }
     &__swiper{
         margin-top: 20px;
+        position: relative;
+        .swiper-container{
+            overflow: visible;
+        }
+        .swiper-button-next,.swiper-button-prev{
+            color: #000000;
+            
+           &:after{
+            display: none;
+           } 
+        }
+        .swiper-button-prev{
+            position: absolute;
+            left:-24px;
+            top:25px;
+        }
+        .swiper-button-next{
+            position: absolute;
+            right:-15px;
+            top:25px;
+        }
     }
     &__item{
         font-weight: 500;
@@ -88,19 +108,23 @@
         text-overflow: ellipsis;  
     }
 }
-    #sidebar-scroll::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-      }
-      
-      #sidebar-scroll::-webkit-scrollbar {
-        width: 10px;
-        background-color: #fff;
-      }
-      
-      #sidebar-scroll::-webkit-scrollbar-thumb {
-        background-color: rgb(193, 193, 193);
-        border: 2px solid rgb(193, 193, 193);
-        border-radius: 20px;
-      }    
-  
+.active-menu-false{
+    left: 0;
+    animation: historyMenuOpen 1s ease-in-out ;
+}
+.active-menu-true{
+    left: -400px;
+    animation: historyMenuClose 1s ease-in-out ;
+}
+@keyframes historyMenuClose{
+ 
+        from { left: 0;}
+        to { left: -400px; }
+   
+ }
+ @keyframes historyMenuOpen{
+ 
+    from { left: -400px;}
+    to { left: 0; }
+
+}

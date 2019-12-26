@@ -12,18 +12,27 @@ import firebases from '../../services/base'
   const handleVisibleChangePopup = () => {
     setVisiblePopup(!visiblePopup)
   }
+  const Сontent = () =>{return (
+    <div>
+      <p>Привет,
+      это карта воспоминаний твоего города!
+      Нажимай на памятное место на карте и оставляй свое
+      записку.</p> 
+      <p>В историях ты можешь посмотреть записки других людей!</p>
+      
+      </div>
+  ) }
   const menu = (
     <Menu className='header__menu'>
       
       <Menu.Item key="1">
      
 
-
   {currentUser?<Link to='/edit-account' >Редактировать</Link>:<Link to='/signup'>Зарегистрироваться</Link>  }
        
       </Menu.Item>
       <Menu.Item key="2">
-      {currentUser?<Link to='/' onClick={()=>{firebases.auth().signOut()}}> выйти</Link>:<Link to='/login' >  Войти</Link>  }
+      {currentUser?<Link to='/' onClick={()=>{firebases.auth().signOut()}}> Выйти</Link>:<Link to='/login' >Войти</Link>  }
       </Menu.Item>
     </Menu>
   );
@@ -32,8 +41,9 @@ import firebases from '../../services/base'
     return (
       <div className='header'>
           <Popover
-        content={<div>Тут будет инфа про то что это</div>}
-        title="Помощь"
+          className='header__popup'
+        content={<Сontent />}
+        title='О нас'
         trigger="click"
         visible={visiblePopup}
         onVisibleChange={handleVisibleChangePopup}
