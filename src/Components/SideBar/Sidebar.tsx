@@ -55,9 +55,12 @@ function itemCheck(item:any) {
 
 
   return (
-    <div className='sidebar'>
-       <button onClick={closeSideBar}> закрыть</button>
-      <div className={`sidebar__inner ${closesideBar?'active-menu-true':'active-menu-false'}`}>
+    <>
+  
+   
+    <div className={`sidebar ${closesideBar?'active-menu-true':'active-menu-false'}`}>
+    <div onClick={closeSideBar} className='sidebar__toggle'><Icon type="caret-right" className={`${closesideBar?'sidebar__toggle--open':'sidebar__toggle--close'}`} /></div>
+      <div className='sidebar__inner'>
         <div className='sidebar__list sidebar-list sidebar-list--history' >
           <div className='sidebar-list__title'>Истории</div>
           <div className='sidebar-list__swiper'>
@@ -99,6 +102,7 @@ function itemCheck(item:any) {
 
       </div>
     </div>
+    </>
   );
 }
 

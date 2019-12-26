@@ -8,7 +8,25 @@
     width: 17rem;
     z-index: 401;
         box-shadow: 17px 0 21px hsla(0,0%,62%,.06);
+        &__toggle{
+            position: absolute;
+            left: 258px;
+            cursor: pointer;
+            top: 100px;
+            
+            
+            color:#87d068;
+            font-size: 40px;
+            &--open{
+                transform: rotate(180deg);
+                animation: historyMenuCloseToggle 1s ease-in-out ;
+            }
+            &--close{
+                transform: rotate(0);
 
+                animation: historyMenuOpenToggle 1s ease-in-out ;
+            }
+        }
         &__inner{
             position: relative;
             height: 100%;
@@ -113,18 +131,31 @@
     animation: historyMenuOpen 1s ease-in-out ;
 }
 .active-menu-true{
-    left: -400px;
+    left: -273px;
     animation: historyMenuClose 1s ease-in-out ;
 }
 @keyframes historyMenuClose{
  
         from { left: 0;}
-        to { left: -400px; }
+        to { left: -273px; }
    
  }
  @keyframes historyMenuOpen{
  
-    from { left: -400px;}
+    from { left: -273px;}
     to { left: 0; }
+
+}
+
+@keyframes historyMenuCloseToggle{
+ 
+        from { transform: rotate(0)}
+        to { transform: rotate(180deg)}
+   
+ }
+ @keyframes historyMenuOpenToggle{
+ 
+    from { transform: rotate(180deg)}
+    to { transform: rotate(0)}
 
 }

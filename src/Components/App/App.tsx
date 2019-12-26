@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import './App.scss';
-import { Avatar, Button,Icon } from 'antd';
+import { Avatar, Button, Icon } from 'antd';
 import Leaflet from 'leaflet'
 import { Map as LeafletMap, TileLayer, Marker, Popup, ZoomControl, FeatureGroup } from 'react-leaflet'
 import ModalMap from '../Modal/Modal'
@@ -24,8 +24,8 @@ const App: React.FC = () => {
   const bounds = Leaflet.latLngBounds(corner1, corner2)
   const { currentUser } = useContext(AuthContext);
   const mapRef: any = useRef()
-  const markerRef:any = useRef()
-  const mapPromise = (array:any) =>{
+  const markerRef: any = useRef()
+  const mapPromise = (array: any) => {
     return new Promise((resolve, reject) => {
       resolve(array)
     })
@@ -60,37 +60,43 @@ const App: React.FC = () => {
 
 
       abc
-        .then((result) =>{
-          firebases.database().ref(`placeNVKZ/${result}`).remove()});
+        .then((result) => {
+          firebases.database().ref(`placeNVKZ/${result}`).remove()
+        });
 
     })
-  
+
   }
 
   const changeList = (id: string) => {
-    const map = mapRef.current.leafletElement
-    const group = groupRef.current.leafletElement
+
 
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
       const listUsers = snapshot.val()
       if (id === '') {
-        console.log(listUsers)
         mapPromise(setMarkerInfo(Object.values(listUsers))).then(() => {
+          const map = mapRef.current.leafletElement
+          const group = groupRef.current.leafletElement
           map.fitBounds(group.getBounds())
         })
       }
       else {
-          mapPromise(setMarkerInfo(Object.values(listUsers).filter((item: any) => item.id === id))).then(() => {
-          map.fitBounds(group.getBounds())
-        })      
-    }
+        mapPromise(setMarkerInfo(Object.values(listUsers).filter((item: any) => item.id === id))).then(() => {
+
+        
+            const map = mapRef.current.leafletElement
+            const group = groupRef.current.leafletElement
+            map.fitBounds(group.getBounds())
+          
+
+        })
+      }
     });
   }
 
 
   const goToMarker = (element: any) => {
-    // mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat,element.latLng.lng))
-   
+
     setCenterMap(element.latLng)
     setZoomMap(19)
   }
@@ -104,12 +110,12 @@ const App: React.FC = () => {
     })
   }, []);
 
-  useEffect( () => {
-    if(currentUser){
+  useEffect(() => {
+    if (currentUser) {
       setCurrentUserCommetns(markerInfo
-      .filter((e:any) => e.id === currentUser.uid)
-      .map((e:any) => e.dateId)
-    );
+        .filter((e: any) => e.id === currentUser.uid)
+        .map((e: any) => e.dateId)
+      );
     }
   }, [markerInfo, currentUser]);
 
@@ -148,7 +154,7 @@ const App: React.FC = () => {
           {markerInfo ? markerInfo.map((el: any, i: number) => {
             return (
               <Marker position={[el.latLng.lat, el.latLng.lng]} key={i} ref={markerRef}>
-                <Popup onOpen={()=>true}>
+                <Popup onOpen={() => true}>
                   <div className='popup'>
                     <h1 className='popup__title'>{el.place}</h1>
                     <div className='popup__user-name'> Автор:  <Avatar src={el.avatar || `https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} /> {el.username}</div>
@@ -159,7 +165,7 @@ const App: React.FC = () => {
 
                       <div className='popup__date'> Когда: {el.date}</div>
 
-                      {currentUser? currentUserCommetns.includes(el.dateId) ? <div onClick={() => { deleteComment(el.dateId) }} className='popup__delete'><Icon type="delete" /></div> : null:''}
+                      {currentUser ? currentUserCommetns.includes(el.dateId) ? <div onClick={() => { deleteComment(el.dateId) }} className='popup__delete'><Icon type="delete" /></div> : null : ''}
 
                     </div>
                   </div>
