@@ -20,6 +20,8 @@ const SideBar = (props: SidebarProp) => {
     slidesPerView: 3,
     spaceBetween: 30,
     shouldSwiperUpdate: true,
+    resistance:true,
+    resistanceRatio: 0.30,
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev'

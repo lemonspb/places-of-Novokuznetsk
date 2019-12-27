@@ -12,8 +12,9 @@ import firebases from '../../services/base'
   const handleVisibleChangePopup = () => {
     setVisiblePopup(!visiblePopup)
   }
-  const Сontent = () =>{return (
-    <div>
+
+  const content = (
+        <div>
       <p>Привет,
       это карта воспоминаний твоего города!
       Нажимай на памятное место на карте и оставляй свое
@@ -21,7 +22,7 @@ import firebases from '../../services/base'
       <p>В историях ты можешь посмотреть записки других людей!</p>
       
       </div>
-  ) }
+  ); 
   const menu = (
     <Menu className='header__menu'>
       
@@ -42,7 +43,7 @@ import firebases from '../../services/base'
       <div className='header'>
           <Popover
           className='header__popup'
-        content={<Сontent />}
+        content={content}
         title='О нас'
         trigger="click"
         visible={visiblePopup}

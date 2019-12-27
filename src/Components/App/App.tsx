@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import './App.scss';
-import { Avatar, Button, Icon } from 'antd';
+import { Avatar, Icon } from 'antd';
 import Leaflet from 'leaflet'
 import { Map as LeafletMap, TileLayer, Marker, Popup, ZoomControl, FeatureGroup } from 'react-leaflet'
 import ModalMap from '../Modal/Modal'
@@ -53,19 +53,10 @@ const App: React.FC = () => {
 
     firebases.database().ref('placeNVKZ/').once('value', (snapshot) => {
       const listUsers = snapshot.val()
+      
 
-
-      let abc = new Promise((resolve, reject) => {
-
-        resolve(Object.keys(listUsers).filter(k => listUsers[k].dateId === dateIdComment));
-      })
-
-
-      abc
-        .then((result) => {
-          firebases.database().ref(`placeNVKZ/${result}`).remove()
-        });
-
+        mapPromise(Object.keys(listUsers).filter(k => listUsers[k].dateId === dateIdComment)).then((result:any) => 
+          firebases.database().ref(`placeNVKZ/${result}`).remove())
     })
 
   }
@@ -81,8 +72,14 @@ const App: React.FC = () => {
       if (id === '') {
         mapPromise(setMarkerInfo(Object.values(listUsers))).then(() => {
       
+          if(Object.keys(group.getBounds()).length === 0){
+            setMarkerInfo(Object.values(listUsers))
+           }
+           else{
+            map.fitBounds(group.getBounds())
 
-          map.fitBounds(group.getBounds())
+           }
+        
         })
       }
       else {
@@ -163,7 +160,7 @@ const App: React.FC = () => {
           {markerInfo ? markerInfo.map((el: any, i: number) => {
             return (
               <Marker position={[el.latLng.lat, el.latLng.lng]} key={i} ref={markerRef}>
-                <Popup onOpen={() => true}>
+                <Popup onClose={()=>true}>
                   <div className='popup'>
                     <h1 className='popup__title'>{el.place}</h1>
                     <div className='popup__user-name'> Автор:  <Avatar src={el.avatar || `https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} /> {el.username}</div>
