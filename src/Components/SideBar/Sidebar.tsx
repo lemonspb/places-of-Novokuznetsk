@@ -93,7 +93,7 @@ function itemCheck(item:any) {
             {props.listPlace.map((el:any,i:number) => {
               return (
                 <List.Item className='sidebar-list__item' onClick={() => props.goToMarker(el)} key={i}>
-                  {el.place}
+                 {i+1}. {el.place}
                   
                 </List.Item>
               )
