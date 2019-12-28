@@ -34,7 +34,7 @@ const handleVisibleChange = (visible:boolean) =>{
 }
 
  const handleSubmit = (e:any) => {
-
+  console.log(firebases.database().ref("child/path"))
 
   e.preventDefault();
 
@@ -44,15 +44,19 @@ const handleVisibleChange = (visible:boolean) =>{
     .database()
     .ref(`/placeNVKZ/`)
     .push({
-      id:currentUser.uid,
+      userId:currentUser.uid,
      latLng:props.children[0],
      text: values.text,
      username: currentUser.displayName,
      place:values.place,
      avatar: currentUser.photoURL,
      date:format(new Date(),'d MMMM yyyy',{locale: ru}),
-     dateId: Date.now()
-        }).then(()=>{
+        }).then((snap:any)=>{
+          firebases.database().ref(`placeNVKZ/${snap.key}`).update({
+            commentId: snap.key
+          }
+          )
+          
       props.children[1](true)
     props.form.setFieldsValue({
       text: '',

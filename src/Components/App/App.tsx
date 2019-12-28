@@ -1,21 +1,19 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import './App.scss';
-import { Avatar, Icon } from 'antd';
 import Leaflet from 'leaflet'
-import { Map as LeafletMap, TileLayer, Marker, Popup, ZoomControl, FeatureGroup } from 'react-leaflet'
+import { Map as LeafletMap, TileLayer, ZoomControl, FeatureGroup } from 'react-leaflet'
 import ModalMap from '../Modal/Modal'
 import Header from '../Header/Header'
 import SideBar from '../SideBar/Sidebar'
 import firebases from '../../services/base'
 import { AuthContext } from "../Auth/Auth"
-
-
+import CustomMarker from '../CustomMarker/CustomMarker'
 
 
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [markerInfo, setMarkerInfo] = useState<any>([])
-  const [currentUserCommetns, setCurrentUserCommetns] = useState<any>([])
+  const [currentUserComments, setCurrentUserComments] = useState<any>([])
   const [centerMap, setCenterMap] = useState<any>([53.757547, 87.136044])
   const [zoomMap, setZoomMap] = useState<number>(11)
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
@@ -24,16 +22,16 @@ const App: React.FC = () => {
   const bounds = Leaflet.latLngBounds(corner1, corner2)
   const { currentUser } = useContext(AuthContext);
   const mapRef: any = useRef()
-  const markerRef: any = useRef()
   const groupRef: any = useRef()
 
-            
+
   const mapPromise = (array: any) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve(array)
     })
 
   }
+
   const mapGet = (e: any) => {
     let arr = {}
     arr = {
@@ -47,18 +45,10 @@ const App: React.FC = () => {
 
   const modalClose = () => {
     setModalOpen(false)
-
   }
+
   const deleteComment = (dateIdComment: string) => {
-
-    firebases.database().ref('placeNVKZ/').once('value', (snapshot) => {
-      const listUsers = snapshot.val()
-      
-
-        mapPromise(Object.keys(listUsers).filter(k => listUsers[k].dateId === dateIdComment)).then((result:any) => 
-          firebases.database().ref(`placeNVKZ/${result}`).remove())
-    })
-
+    firebases.database().ref(`placeNVKZ/${dateIdComment}`).remove()
   }
 
 
@@ -67,36 +57,20 @@ const App: React.FC = () => {
     const map = mapRef.current.leafletElement
 
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
-     
+
       const listUsers = snapshot.val()
-      if (id === '') {
-        mapPromise(setMarkerInfo(Object.values(listUsers))).then(() => {
-      
-          if(Object.keys(group.getBounds()).length === 0){
-            setMarkerInfo(Object.values(listUsers))
-           }
-           else{
-            map.fitBounds(group.getBounds())
+      const notes = Object.values(listUsers);
+      const filteredNotes = id
+        ? notes.filter((item: any) => item.userId === id)
+        : notes;
 
-           }
-        
-        })
-      }
-      else {
-        mapPromise(setMarkerInfo(Object.values(listUsers).filter((item: any) => item.id === id))).then(() => {
-          
-
-             if(Object.keys(group.getBounds()).length === 0){
-              setMarkerInfo(Object.values(listUsers))
-             }
-             else{
-              map.fitBounds(group.getBounds())
-
-             }
-          
-
-        })
-      }
+      mapPromise(setMarkerInfo(filteredNotes)).then(() => {
+        if (Object.keys(group.getBounds()).length === 0) {
+          setMarkerInfo(notes);
+        } else {
+          map.fitBounds(group.getBounds());
+        }
+      })
     });
   }
 
@@ -110,17 +84,17 @@ const App: React.FC = () => {
   useEffect(() => {
 
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
-      const listUsers = snapshot.val()
+      const notes = snapshot.val()
 
-      setMarkerInfo(Object.values(listUsers))
+      setMarkerInfo(Object.values(notes))
     })
   }, []);
 
   useEffect(() => {
     if (currentUser) {
-      setCurrentUserCommetns(markerInfo
-        .filter((e: any) => e.id === currentUser.uid)
-        .map((e: any) => e.dateId)
+      setCurrentUserComments(markerInfo
+        .filter((e: any) => e.userId === currentUser.uid)
+        .map((e: any) => e.commentId)
       );
     }
   }, [markerInfo, currentUser]);
@@ -157,29 +131,11 @@ const App: React.FC = () => {
           url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
         <FeatureGroup ref={groupRef}>
-          {markerInfo ? markerInfo.map((el: any, i: number) => {
-            return (
-              <Marker position={[el.latLng.lat, el.latLng.lng]} key={i} ref={markerRef}>
-                <Popup onClose={()=>true}>
-                  <div className='popup'>
-                    <h1 className='popup__title'>{el.place}</h1>
-                    <div className='popup__user-name'> Автор:  <Avatar src={el.avatar || `https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} /> {el.username}</div>
-                    <div className='popup__text'>
-                      {el.text}
-                    </div>
-                    <div className='popup__footer'>
+          {markerInfo && markerInfo.map((el: any, i: number) => {
 
-                      <div className='popup__date'> Когда: {el.date}</div>
+            <CustomMarker  elements={el}  currentUserComments = {currentUserComments} deleteComment={deleteComment}/>
 
-                      {currentUser ? currentUserCommetns.includes(el.dateId) ? <div onClick={() => { deleteComment(el.dateId) }} className='popup__delete'><Icon type="delete" /></div> : null : ''}
-
-                    </div>
-                  </div>
-                </Popup>
-              </Marker>
-            )
-
-          }) : null}
+          })}
         </FeatureGroup>
       </LeafletMap>
       <ModalMap modalOpen={modalOpen} modalClose={modalClose} latLng={latLng} />

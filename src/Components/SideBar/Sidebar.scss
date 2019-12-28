@@ -26,12 +26,13 @@
        
             &--open{
                 transform: rotate(180deg);
-                animation: historyMenuCloseToggle 1s ease-in-out ;
+                transition: all 300ms ease-in-out;
+
             }
             &--close{
                 transform: rotate(0);
 
-                animation: historyMenuOpenToggle 1s ease-in-out ;
+                transition: all 300ms ease-in-out;
             
     }
     .anticon{
@@ -68,7 +69,7 @@
     }
     &--place{
         height: 80%;
-        
+        overflow: hidden;
 
     }
     &__title{
@@ -140,35 +141,10 @@
     }
 }
 .active-menu-false{
-    left: 0;
-    animation: historyMenuOpen 1s ease-in-out ;
+    transform: translateX(0);
+    transition: all 300ms ease-in-out;
 }
 .active-menu-true{
-    left: -273px;
-    animation: historyMenuClose 1s ease-in-out ;
-}
-@keyframes historyMenuClose{
- 
-        from { left: 0;}
-        to { left: -273px; }
-   
- }
- @keyframes historyMenuOpen{
- 
-    from { left: -273px;}
-    to { left: 0; }
-
-}
-
-@keyframes historyMenuCloseToggle{
- 
-        from { transform: rotate(0)}
-        to { transform: rotate(180deg)}
-   
- }
- @keyframes historyMenuOpenToggle{
- 
-    from { transform: rotate(180deg)}
-    to { transform: rotate(0)}
-
+    transform: translateX(-273px);
+    transition: all 300ms ease-in-out;
 }

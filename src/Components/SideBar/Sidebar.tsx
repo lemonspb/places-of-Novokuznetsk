@@ -3,7 +3,6 @@ import firebases from '../../services/base'
 import './Sidebar.scss'
 import { List,Avatar,Icon } from 'antd';
 import Swiper from 'react-id-swiper';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 export interface SidebarProp {
   goToMarker: Function
@@ -29,7 +28,20 @@ const SideBar = (props: SidebarProp) => {
     renderPrevButton: () => <div className="swiper-button-prev"><Icon type="left" /></div>,
     renderNextButton: () => <div className="swiper-button-next"><Icon type="right" /></div>,
   }
-     
+  const params2 = {
+    direction: 'vertical',
+    slidesPerView: 9,
+    shouldSwiperUpdate: false,
+    resistance:true,
+    resistanceRatio: 0.30,
+    scrollbar: {
+      el: '.swiper-scrollbar'
+    },
+  }
+
+  
+
+
   const closeSideBar = () =>{
     setCloseSideBar(!closesideBar)
   }
@@ -67,9 +79,9 @@ function itemCheck(item:any) {
           <div className='sidebar-list__title'>Истории</div>
           <div className='sidebar-list__swiper'>
             <Swiper {...params} >
-            {place.filter((item:any) => itemCheck(item.id)).map((el: any,i:number) => {
+            {place.filter((item:any) => itemCheck(item.userId)).map((el: any,i:number) => {
               return (
-               <div className='sidebar-list__user' onClick={(()=>props.changeList(el.id))} key={i}>
+               <div className='sidebar-list__user' onClick={(()=>props.changeList(el.userId))} key={i}>
 
                  {el.avatar?<Avatar size="large" src={el.avatar} />:<Avatar size="large" icon="user" />} 
                   
@@ -84,21 +96,17 @@ function itemCheck(item:any) {
         <div className='sidebar__list sidebar-list sidebar-list--place' id='sidebar-scroll'>
           <div className='sidebar-list__title'>Места <span className='sidebar-list__see-all' onClick={(()=>props.changeList(''))}>Смотреть все</span></div>
           <List size="large">
-          <Scrollbars style={{  height:500 }}
-           autoHide
-           autoHideTimeout={2000}
-           thumbMinSize={30}
-           universal={true}
-          >
+          
+          {props.listPlace.lenght !==0? <Swiper {...params2} >
             {props.listPlace.map((el:any,i:number) => {
               return (
-                <List.Item className='sidebar-list__item' onClick={() => props.goToMarker(el)} key={i}>
+                <div className='sidebar-list__item' onClick={() => props.goToMarker(el)} key={i}>
                  {i+1}. {el.place}
                   
-                </List.Item>
+                </div>
               )
             })}
-            </Scrollbars>
+            </Swiper>:''}
           </List>
         </div>
 
