@@ -15,6 +15,7 @@ const App: React.FC = () => {
   const [markerInfo, setMarkerInfo] = useState<any>([])
   const [currentUserComments, setCurrentUserComments] = useState<any>([])
   const [centerMap, setCenterMap] = useState<any>([53.757547, 87.136044])
+  const [openNote, setOpenNote] = useState<any>();
   const [zoomMap, setZoomMap] = useState<number>(11)
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
@@ -76,7 +77,7 @@ const App: React.FC = () => {
 
 
   const goToMarker = (element: any) => {
-
+    setOpenNote(element)
     setCenterMap(element.latLng)
     setZoomMap(19)
   }
@@ -131,9 +132,12 @@ const App: React.FC = () => {
           url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
         <FeatureGroup ref={groupRef}>
-          {markerInfo && markerInfo.map((el: any, i: number) => {
+          {markerInfo && markerInfo.map((el: any) => {
+            return(
+              <CustomMarker  element={el}  currentUserComments={currentUserComments}  deleteComments={deleteComment} openNote={openNote} setOpenNote={setOpenNote}/>
+            )
 
-            <CustomMarker  elements={el}  currentUserComments = {currentUserComments} deleteComment={deleteComment}/>
+          
 
           })}
         </FeatureGroup>
