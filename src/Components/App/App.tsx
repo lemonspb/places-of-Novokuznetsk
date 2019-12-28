@@ -77,9 +77,11 @@ const App: React.FC = () => {
 
 
   const goToMarker = (element: any) => {
-    setOpenNote(element)
     setCenterMap(element.latLng)
-    setZoomMap(19)
+   
+    mapPromise( setZoomMap(19)).then(()=>{
+      setOpenNote(element)
+    })
   }
 
   useEffect(() => {

@@ -97,16 +97,15 @@ function itemCheck(item:any) {
           <div className='sidebar-list__title'>Места <span className='sidebar-list__see-all' onClick={(()=>props.changeList(''))}>Смотреть все</span></div>
           <List size="large">
           
-          {props.listPlace.lenght !==0? <Swiper {...params2} >
-            {props.listPlace.map((el:any,i:number) => {
+          {props.listPlace.length !==0?props.listPlace.map((el:any,i:number) => {
               return (
                 <div className='sidebar-list__item' onClick={() => props.goToMarker(el)} key={i}>
                  {i+1}. {el.place}
                   
                 </div>
               )
-            })}
-            </Swiper>:''}
+            }):''}
+           
           </List>
         </div>
 
