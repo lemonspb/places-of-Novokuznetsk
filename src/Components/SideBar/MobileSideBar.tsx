@@ -16,30 +16,33 @@ const MobileSideBar = (props: SidebarProp) => {
   const [closesideBar, setCloseSideBar] = useState(false)
   let tmpArray:any = [];
   const params = {
-    slidesPerView: 5,
-    spaceBetween: 30,
+    slidesPerView: 4,
+    spaceBetween: 40,
     shouldSwiperUpdate: true,
     resistance:true,
     resistanceRatio: 0.30,
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
+        nextEl: '.swiper-button-next-mobile-top',
+        prevEl: '.swiper-button-prev-mobile-top',
+      },
+      renderPrevButton: () => <div className="swiper-button-prev-mobile-top"><Icon type="left" /></div>,
+      renderNextButton: () => <div className="swiper-button-next-mobile-top"><Icon type="right" /></div>,
     }
 
-  }
+  
   const params2 = {
     slidesPerView: 3,
-    spaceBetween: 30,
+    spaceBetween: 50,
     shouldSwiperUpdate: true,
     resistance:true,
     resistanceRatio: 0.30,
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    },
-
-  }
-
+        nextEl: '.swiper-button-next-mobile-bottom',
+        prevEl: '.swiper-button-prev-mobile-bootom',
+      },
+      renderPrevButton: () => <div className="swiper-button-prev-mobile-bottom"><Icon type="left" /></div>,
+      renderNextButton: () => <div className="swiper-button-next-mobile-bottom"><Icon type="right" /></div>,
+    }
   
 
 
