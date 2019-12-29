@@ -8,7 +8,7 @@ import SideBar from '../SideBar/Sidebar'
 import firebases from '../../services/base'
 import { AuthContext } from "../Auth/Auth"
 import CustomMarker from '../CustomMarker/CustomMarker'
-
+import MobileSideBar from '../SideBar/MobileSideBar'
 
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
@@ -108,6 +108,8 @@ const App: React.FC = () => {
     <div className="App">
       <Header />
       <SideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
+      <MobileSideBar  goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
+
       <LeafletMap
         ref={mapRef}
         onClick={mapGet}
@@ -127,8 +129,8 @@ const App: React.FC = () => {
         maxBounds={bounds}
 
       >
-        <ZoomControl position="bottomright">
-        </ZoomControl>
+       {window.innerWidth < 767?<ZoomControl position="topleft" />:<ZoomControl position="bottomright" /> } 
+        
         <TileLayer
           attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'

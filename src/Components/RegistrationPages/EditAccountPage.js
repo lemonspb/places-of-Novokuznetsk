@@ -43,7 +43,7 @@ const EditAccountPage = (props, { history }) => {
               firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
                 const listUsers = snapshot.val()
                 for (let variable in listUsers) {
-                  if (listUsers[variable].id === currentUser.uid) {
+                  if (listUsers[variable].userId === currentUser.uid) {
                     newName.push(variable)
                     setNewName(newName)
                   }
@@ -69,7 +69,7 @@ const EditAccountPage = (props, { history }) => {
             firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
               const listUsers = snapshot.val()
               for (let variable in listUsers) {
-                if (listUsers[variable].id === currentUser.uid) {
+                if (listUsers[variable].userId === currentUser.uid) {
                   newName.push(variable)
                   setNewName(newName)
                 }
@@ -115,7 +115,7 @@ const EditAccountPage = (props, { history }) => {
               name="avatar"
               listType="picture-card"
               className="avatar-uploader"
-
+              type='file'
               showUploadList={false}
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               beforeUpload={beforeUpload}
