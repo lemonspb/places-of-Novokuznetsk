@@ -15,8 +15,8 @@ const App: React.FC = () => {
   const [markerInfo, setMarkerInfo] = useState<any>([])
   const [currentUserComments, setCurrentUserComments] = useState<any>([])
   const [centerMap, setCenterMap] = useState<any>([53.757547, 87.136044])
+  const [openNote, setOpenNote] = useState<any>();
   const [zoomMap, setZoomMap] = useState<number>(11)
-  const [moveEndQueue, setMoveEndQueue] = useState<any>([]);
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
   const [latLng, setLatLng] = useState<any>([])
@@ -76,13 +76,16 @@ const App: React.FC = () => {
 
 
   const goToMarker = (element: any) => {
-    setCenterMap(element.latLng);
     setZoomMap(19);
+   mapPromise(setOpenNote(element)).then(()=>{
+      mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
+  
+   
+    
+   })    
+    
   }
-  const handleMoveEnd = () => {
-    moveEndQueue.forEach((callback:any) => callback());
-    setMoveEndQueue([]);
-  };
+ 
   useEffect(() => {
 
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
@@ -110,7 +113,6 @@ const App: React.FC = () => {
       <MobileSideBar  goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
 
       <LeafletMap
-         onMoveEnd={handleMoveEnd}
         ref={mapRef}
         onClick={mapGet}
         center={centerMap}
@@ -138,7 +140,7 @@ const App: React.FC = () => {
         <FeatureGroup ref={groupRef}>
           {markerInfo && markerInfo.map((el: any) => {
             return(
-              <CustomMarker  element={el}  currentUserComments={currentUserComments}  deleteComments={deleteComment} />
+              <CustomMarker  element={el}  currentUserComments={currentUserComments}  deleteComments={deleteComment} openNote={openNote} setOpenNote={setOpenNote}/>
             )
 
           

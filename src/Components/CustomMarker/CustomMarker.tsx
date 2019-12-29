@@ -8,7 +8,8 @@ export interface CustomMarkerProp {
   element: any,
   currentUserComments: any,
   deleteComments: Function
-
+  openNote:any,
+  setOpenNote:any
 }
 
 
@@ -18,10 +19,15 @@ const CustomMarker =  (props:CustomMarkerProp) =>{
   
 const {currentUser} = useContext(AuthContext)
 const   markerRef:any = useRef();
-
+useEffect(() => {
+  
+  if (!markerRef.current || props.element !== props.openNote) return;
+  markerRef.current.leafletElement.openPopup()
+  
+}, [props.openNote, markerRef])
     return (
         <Marker position={[props.element.latLng.lat, props.element.latLng.lng]} ref={markerRef} >
-          <Popup   >
+          <Popup  onOpen={()=>{props.setOpenNote(props.element)}}   >
             <div className='popup'>
               <h1 className='popup__title'>{props.element.place}</h1>
               <div className='popup__user-name'> Автор:  <Avatar src={props.element.avatar || `https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} /> {props.element.username}</div>
