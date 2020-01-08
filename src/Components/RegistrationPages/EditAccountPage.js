@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { withRouter } from "react-router";
 import firebases from "../../services/base"
-import { Button, Form, Input, Icon, Upload, message } from 'antd';
+import { Button, Form, Input, Icon } from 'antd';
 import { AuthContext } from "../Auth/Auth";
-
+import  UploadComponent  from '../UploadComponent/UploadComponent'
 import './ RegistrationPage.scss'
 
 
@@ -11,16 +11,10 @@ const EditAccountPage = (props, { history }) => {
 
   const { currentUser } = useContext(AuthContext);
   const [newName, setNewName] = useState([]);
-  // const [editSuccess, setEditSuccess] = useState(false)
-  function normFile(e) {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
-
-
+  const [imageFile, setImageFile] = useState()
+  const getImage = (fileImg)=>{
+    setImageFile(fileImg)
+  }
 
 
 
@@ -28,17 +22,12 @@ const EditAccountPage = (props, { history }) => {
     event.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values.upload)
 
-        const avatarStgRef = firebases.storage().ref("Usuarios/" + currentUser.uid + `/${values.upload[0].name}`).put(values.upload[0].originFileObj);
+        const avatarStgRef = firebases.storage().ref("Usuarios/" + currentUser.uid + `/${imageFile.file.name}`).put(imageFile.file.originFileObj);
         avatarStgRef.then((snapshot) => {
           snapshot.ref.getDownloadURL().then((url) => {
             currentUser.updateProfile({
               photoURL: url
-            }).then(() => {
-              firebases.database().ref("Usuarios/" + currentUser.uid).set({
-                "photoUri": url
-              });
             }).then(() => {
               firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
                 const listUsers = snapshot.val()
@@ -51,7 +40,6 @@ const EditAccountPage = (props, { history }) => {
               });
               newName.forEach((el) => {
                 firebases.database().ref(`placeNVKZ/${el}`).update({
-
                   avatar: currentUser.photoURL
                 }
                 )
@@ -87,46 +75,16 @@ const EditAccountPage = (props, { history }) => {
     })
 
   }
-  function beforeUpload(file) {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-  }
+
 
 
 
   return (
     <div className='form-wrap'>
+      <UploadComponent getImage={getImage}/>
       <Form onSubmit={handleEditProfile} className='form-register' >
-        <Form.Item >
-          {props.form.getFieldDecorator('upload', {
-            valuePropName: 'file',
-            getValueFromEvent: normFile,
-
-            rules: [{ required: false, message: 'Please input your password!' }],
-          })(
-            <Upload
-              name="avatar"
-              listType="picture-card"
-              className="avatar-uploader"
-              type='file'
-              showUploadList={false}
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              beforeUpload={beforeUpload}
-              multiple={false}
-            >
-              <Button>
-                <Icon type="upload" /> Click to upload
-              </Button>
-            </Upload>,
-          )}
-        </Form.Item>
+     
+       
         <Form.Item>
           {props.form.getFieldDecorator('name', {
             rules: [{ required: false }],
