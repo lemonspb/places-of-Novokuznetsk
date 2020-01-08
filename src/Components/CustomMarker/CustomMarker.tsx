@@ -30,7 +30,8 @@ useEffect(() => {
           <Popup  onOpen={()=>{props.setOpenNote(props.element)}}   >
             <div className='popup'>
               <h1 className='popup__title'>{props.element.place}</h1>
-              <div className='popup__user-name'> Автор:  <Avatar src={props.element.avatar || `https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} /> {props.element.username}</div>
+               <div className='popup__user-name'> Автор:  <Avatar src={props.element.avatar || `https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} /> {props.element.username}</div>
+                <img src={props.element.commentImage} alt="" className='popup__image'/>
               <div className='popup__text'>
                 {props.element.text}
               </div>
