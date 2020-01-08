@@ -55,7 +55,7 @@ import firebases from '../../services/base'
           <Dropdown overlay={menu} className='header__dropdown'>
             <div className='header__avatar-wrap'>
             {currentUser && currentUser.photoURL?<Avatar size="large"  src={currentUser.photoURL} />:<Avatar size="large" icon='user' />} 
-            <div className='header__diplayname'>{currentUser?currentUser.displayName:''}</div>   
+            <div className='header__diplayname'>{currentUser && currentUser.displayName?currentUser.displayName:''}</div>   
             </div>
           
     </Dropdown>

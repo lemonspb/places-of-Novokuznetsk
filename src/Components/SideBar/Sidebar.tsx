@@ -86,7 +86,7 @@ function itemCheck(item:any) {
 
                  {el.avatar?<Avatar size="large" src={el.avatar} />:<Avatar size="large" icon="user" />} 
                   
-              <span className='sidebar-list__name'>{el.username}</span> 
+              <span className='sidebar-list__name'>{el.username?el.username:'неизвестно'}</span> 
                </div>  
               )
             })}

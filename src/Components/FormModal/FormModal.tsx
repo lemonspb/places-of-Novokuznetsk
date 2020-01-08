@@ -34,7 +34,6 @@ const FormModal = (props: any) => {
   }
 
   const getImage = (fileImg:any)=>{
-    console.log(fileImg)
     setImageFile(fileImg)
   }
 
@@ -117,8 +116,7 @@ const FormModal = (props: any) => {
           {!currentUser ? <Popover
             content={
               <div>
-                <div>чтобы оставить записку о месте нужно зарегистрироваться</div>
-                <Link to='/signup'>Регистрация</Link>
+                <div>чтобы оставить записку о месте нужно <Link to='/signup'>Зарегистрироваться</Link> или</div>
                 <Link to='/login'>Войти</Link>
               </div>
             }

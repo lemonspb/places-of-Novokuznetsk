@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { withRouter } from "react-router";
+import { withRouter, Link } from "react-router-dom";
 import firebases from "../../services/base"
 import { Button, Form, Input, Icon } from 'antd';
 import { AuthContext } from "../Auth/Auth";
@@ -22,7 +22,7 @@ const EditAccountPage = (props, { history }) => {
     event.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-
+        if(imageFile){
         const avatarStgRef = firebases.storage().ref("Usuarios/" + currentUser.uid + `/${imageFile.file.name}`).put(imageFile.file.originFileObj);
         avatarStgRef.then((snapshot) => {
           snapshot.ref.getDownloadURL().then((url) => {
@@ -47,7 +47,7 @@ const EditAccountPage = (props, { history }) => {
             })
           });
         });
-
+      }
 
         if (values.name.length !== 0) {
           const user = firebases.auth().currentUser;
@@ -96,6 +96,8 @@ const EditAccountPage = (props, { history }) => {
           )}
         </Form.Item>
         <Button type='primary' htmlType="submit" >сохранить</Button>
+        <Button type='primary'><Link to='/'>на главную</Link></Button>
+
       </Form>
 
     </div>
