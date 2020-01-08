@@ -117,7 +117,7 @@ const App: React.FC = () => {
         onClick={mapGet}
         center={centerMap}
         zoom={zoomMap}
-        minZoom={12}
+        minZoom={1}
         maxZoom={19}
         attributionControl={true}
         zoomControl={false}
