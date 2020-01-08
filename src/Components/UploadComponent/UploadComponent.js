@@ -45,11 +45,11 @@ class UploadComponent extends React.Component  {
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">Upload</div>
+        <div className="ant-upload-text">Загрузите фото</div>
       </div>
     );
     const { imageUrl } = this.state;
-    
+    const {className} = this.props
     return (
       <Upload
         name="avatar"
@@ -59,6 +59,7 @@ class UploadComponent extends React.Component  {
         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
+        className={className}
       >
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>

@@ -31,7 +31,7 @@ const MobileSideBar = (props: SidebarProp) => {
 
   
   const params2 = {
-    slidesPerView: 3,
+    slidesPerView: 1,
     spaceBetween: 50,
     shouldSwiperUpdate: true,
     resistance:true,

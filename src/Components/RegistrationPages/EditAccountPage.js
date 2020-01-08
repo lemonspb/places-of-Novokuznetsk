@@ -81,7 +81,7 @@ const EditAccountPage = (props, { history }) => {
 
   return (
     <div className='form-wrap'>
-      <UploadComponent getImage={getImage}/>
+      <UploadComponent getImage={getImage} className='form__upload'/>
       <Form onSubmit={handleEditProfile} className='form-register' >
      
        
