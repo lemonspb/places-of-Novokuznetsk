@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import Leaflet from 'leaflet'
+import React, {  useEffect, useContext, useRef } from 'react';
 import {  Marker, Popup,  } from 'react-leaflet'
 import { AuthContext } from "../Auth/Auth"
 import { Avatar, Icon } from 'antd';
@@ -16,7 +15,7 @@ export interface CustomMarkerProp {
 
 const CustomMarker =  (props:CustomMarkerProp) =>{
 
-  
+
 const {currentUser} = useContext(AuthContext)
 const   markerRef:any = useRef();
 useEffect(() => {
@@ -24,13 +23,15 @@ useEffect(() => {
   if (!markerRef.current || props.element !== props.openNote) return;
   markerRef.current.leafletElement.openPopup()
   
-}, [props.openNote, markerRef])
+}, [props.openNote, markerRef,props.element])
+
+
     return (
         <Marker position={[props.element.latLng.lat, props.element.latLng.lng]} ref={markerRef} >
-          <Popup  onOpen={()=>{props.setOpenNote(props.element)}}   >
+          <Popup  onOpen={()=>{props.setOpenNote(props.element)}}>
             <div className='popup'>
               <h1 className='popup__title'>{props.element.place}</h1>
-               <div className='popup__user-name'> Автор:  <Avatar src={props.element.avatar || `https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} /> {props.element.username}</div>
+               <div className='popup__user-name'> Автор:  {props.element.avatar?<Avatar size="large" src={props.element.avatar} />:<Avatar size="large" icon="user" />}  {props.element.username}</div>
                 <img src={props.element.commentImage} alt="" className='popup__image'/>
               <div className='popup__text'>
                 {props.element.text}

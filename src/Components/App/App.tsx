@@ -7,14 +7,13 @@ import Header from '../Header/Header'
 import SideBar from '../SideBar/Sidebar'
 import firebases from '../../services/base'
 import { AuthContext } from "../Auth/Auth"
-import CustomMarker from '../CustomMarker/CustomMarker'
 import MobileSideBar from '../SideBar/MobileSideBar'
+import  CustomMarker  from '../CustomMarker/CustomMarker'
 
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [markerInfo, setMarkerInfo] = useState<any>([])
   const [currentUserComments, setCurrentUserComments] = useState<any>([])
-  const [centerMap, setCenterMap] = useState<any>([53.757547, 87.136044])
   const [openNote, setOpenNote] = useState<any>();
   const [zoomMap, setZoomMap] = useState<number>(11)
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
@@ -77,15 +76,15 @@ const App: React.FC = () => {
 
   const goToMarker = (element: any) => {
     setZoomMap(19);
-   mapPromise(setOpenNote(element)).then(()=>{
+    mapPromise(setOpenNote(element)).then(() => {
       mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
-  
-   
-    
-   })    
-    
+
+
+
+    })
+
   }
- 
+
   useEffect(() => {
 
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
@@ -110,12 +109,12 @@ const App: React.FC = () => {
     <div className="App">
       <Header />
       <SideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
-      <MobileSideBar  goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
+      <MobileSideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
 
       <LeafletMap
         ref={mapRef}
         onClick={mapGet}
-        center={centerMap}
+        center={[53.757547, 87.136044]}
         zoom={zoomMap}
         minZoom={1}
         maxZoom={19}
@@ -131,19 +130,17 @@ const App: React.FC = () => {
         maxBounds={bounds}
 
       >
-       {window.innerWidth < 767?<ZoomControl position="topleft" />:<ZoomControl position="bottomright" /> } 
-        
+        {window.innerWidth < 767 ? <ZoomControl position="topleft" /> : <ZoomControl position="bottomright" />}
+
         <TileLayer
           attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
         <FeatureGroup ref={groupRef}>
-          {markerInfo && markerInfo.map((el: any) => {
-            return(
-              <CustomMarker  element={el}  currentUserComments={currentUserComments}  deleteComments={deleteComment} openNote={openNote} setOpenNote={setOpenNote}/>
+          {markerInfo && markerInfo.map((el: any,i:number) => {
+            return (
+                <CustomMarker element={el} currentUserComments={currentUserComments} deleteComments={deleteComment} openNote={openNote} setOpenNote={setOpenNote} key={i} />
             )
-
-          
 
           })}
         </FeatureGroup>

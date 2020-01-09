@@ -1,6 +1,6 @@
 
 import React, { useContext, useState } from 'react'
-import { Form, Icon, Input, Button, Popover ,Upload} from 'antd';
+import { Form, Icon, Input, Button, Popover} from 'antd';
 import firebases from '../../services/base';
 import ru from 'date-fns/locale/ru';
 import { format } from 'date-fns';
@@ -18,8 +18,6 @@ export interface FormProp {
   }
   form: any
 }
-
-
 
 const FormModal = (props: any) => {
 

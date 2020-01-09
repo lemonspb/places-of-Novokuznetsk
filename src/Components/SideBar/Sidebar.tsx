@@ -28,16 +28,6 @@ const SideBar = (props: SidebarProp) => {
     renderPrevButton: () => <div className="swiper-button-prev"><Icon type="left" /></div>,
     renderNextButton: () => <div className="swiper-button-next"><Icon type="right" /></div>,
   }
-  const params2 = {
-    direction: 'vertical',
-    slidesPerView: 9,
-    shouldSwiperUpdate: false,
-    resistance:true,
-    resistanceRatio: 0.30,
-    scrollbar: {
-      el: '.swiper-scrollbar'
-    },
-  }
 
   
 

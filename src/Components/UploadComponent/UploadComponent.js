@@ -14,7 +14,7 @@ function beforeUpload(file) {
   }
   const isLt4M = file.size / 1024 / 1024 < 4;
   if (!isLt4M) {
-    message.error('Image must smaller than 2MB!');
+    message.error('Image must smaller than 4MB!');
   }
   return isJpgOrPng && isLt4M;
 }
@@ -39,6 +39,11 @@ class UploadComponent extends React.Component  {
       );
     }
   };
+        dummyRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
 
   render() {
 
@@ -56,7 +61,7 @@ class UploadComponent extends React.Component  {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        customRequest = {this.dummyRequest}
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
         className={className}
