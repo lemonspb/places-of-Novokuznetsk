@@ -44,7 +44,7 @@ import firebases from '../../services/base'
           <Popover
           className='header__popup'
         content={content}
-        title='О нас'
+        title='Помощь'
         trigger="click"
         visible={visiblePopup}
         onVisibleChange={handleVisibleChangePopup}
