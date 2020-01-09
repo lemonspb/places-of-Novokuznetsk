@@ -16,8 +16,8 @@ const MobileSideBar = (props: SidebarProp) => {
   const [closesideBar, setCloseSideBar] = useState(false)
   let tmpArray:any = [];
   const params = {
-    slidesPerView: 4,
-    spaceBetween: 40,
+    slidesPerView: 3,
+    spaceBetween: 60,
     shouldSwiperUpdate: true,
     resistance:true,
     resistanceRatio: 0.30,

@@ -247,6 +247,8 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            width: 86px;
+
         }
 
         .swiper-button-next-mobile-top,
@@ -326,7 +328,6 @@
             text-overflow: ellipsis;
             padding: 5px 18px;
             text-align: start;
-            box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
 
         }
     }
