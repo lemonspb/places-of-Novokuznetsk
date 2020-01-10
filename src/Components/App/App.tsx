@@ -46,8 +46,8 @@ const App: React.FC = () => {
     setModalOpen(false)
   }
 
-  const deleteComment = (dateIdComment: string) => {
-    firebases.database().ref(`placeNVKZ/${dateIdComment}`).remove()
+  const deleteComment = (element:any) => {
+    firebases.database().ref(`placeNVKZ/${element.commentId}`).remove()
   }
 
 
@@ -75,9 +75,10 @@ const App: React.FC = () => {
 
 
   const goToMarker = (element: any) => {
-    setZoomMap(19);
-    mapPromise(setOpenNote(element)).then(() => {
-      mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
+    mapPromise(  mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))).then((result) => {
+      console.log(result)
+      setOpenNote(element)
+      setZoomMap(19);
 
 
 

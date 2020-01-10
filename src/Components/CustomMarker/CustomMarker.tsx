@@ -4,7 +4,7 @@ import { AuthContext } from "../Auth/Auth"
 import { Avatar, Icon } from 'antd';
 
 export interface CustomMarkerProp {
-  element: any,
+  element: any | null,
   currentUserComments: any,
   deleteComments: Function
   openNote: any,
@@ -18,16 +18,19 @@ const CustomMarker = (props: CustomMarkerProp) => {
   const markerRef: any = useRef();
   const imageRef: any = useRef()
   const popupRef: any = useRef()
-  useEffect(() => {
-
-    if (!markerRef.current || props.element !== props.openNote) return;
+  useEffect(()=> {
+  
+    if (!markerRef.current || props.element !== props.openNote)return;
+  
     markerRef.current.leafletElement.openPopup()
 
 
   }, [props.openNote, markerRef, props.element]
   )
-
-
+  if (!props.element.place) {
+    debugger;
+    return null;
+  }
   return (
     <Marker position={[props.element.latLng.lat, props.element.latLng.lng]} ref={markerRef} >
       <Popup onOpen={() => { props.setOpenNote(props.element) }} ref={popupRef}>
@@ -42,7 +45,7 @@ const CustomMarker = (props: CustomMarkerProp) => {
 
             <div className='popup__date'> Когда: {props.element.date}</div>
 
-            {currentUser && props.currentUserComments.includes(props.element.commentId) ? <div onClick={() => { props.deleteComments(props.element.commentId) }} className='popup__delete'><Icon type="delete" /></div> : null}
+            {currentUser && props.currentUserComments.includes(props.element.commentId) ? <div onClick={() => { props.deleteComments(props.element) }} className='popup__delete'><Icon type="delete" /></div> : null}
 
           </div>
         </div>
