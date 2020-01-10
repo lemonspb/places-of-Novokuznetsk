@@ -63,10 +63,10 @@ const FormModal = (props: any) => {
                const imgStgRef = firebases.storage().ref("CommentImage/" + snap.key + `/${imageFile.file.name}`).put(imageFile.file.originFileObj);
                imgStgRef.then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
-                  console.log(url)
                   firebases.database().ref(`placeNVKZ/${snap.key}`).update({
                     commentImage: url                 
                    })
+                   setImageFile('')
                   })        
             })
           }

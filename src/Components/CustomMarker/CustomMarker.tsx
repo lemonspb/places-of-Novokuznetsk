@@ -27,10 +27,7 @@ const CustomMarker = (props: CustomMarkerProp) => {
 
   }, [props.openNote, markerRef, props.element]
   )
-  if (!props.element.place) {
-    debugger;
-    return null;
-  }
+ 
   return (
     <Marker position={[props.element.latLng.lat, props.element.latLng.lng]} ref={markerRef} >
       <Popup onOpen={() => { props.setOpenNote(props.element) }} ref={popupRef}>
@@ -43,7 +40,7 @@ const CustomMarker = (props: CustomMarkerProp) => {
           </div>
           <div className='popup__footer'>
 
-            <div className='popup__date'> Когда: {props.element.date}</div>
+            <div className='popup__date'> Дата: {props.element.date}</div>
 
             {currentUser && props.currentUserComments.includes(props.element.commentId) ? <div onClick={() => { props.deleteComments(props.element) }} className='popup__delete'><Icon type="delete" /></div> : null}
 
