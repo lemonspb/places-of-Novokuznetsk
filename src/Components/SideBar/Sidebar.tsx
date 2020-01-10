@@ -88,8 +88,6 @@ function itemCheck(item:any) {
         <div className='sidebar__list sidebar-list sidebar-list--place' id='sidebar-scroll'>
           <div className='sidebar-list__title'>Места <span className='sidebar-list__see-all' onClick={(()=>props.changeList(''))}>Смотреть все</span></div>
           <Scrollbars style={{  maxHeight:90+"%" }}
-           autoHide
-           autoHideTimeout={2000}
            thumbMinSize={30}
            universal={true}
           >
