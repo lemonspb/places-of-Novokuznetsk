@@ -3,6 +3,7 @@ import firebases from '../../services/base'
 import './Sidebar.scss'
 import { List,Avatar,Icon } from 'antd';
 import Swiper from 'react-id-swiper';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export interface SidebarProp {
   goToMarker: Function
@@ -86,8 +87,14 @@ function itemCheck(item:any) {
         </div>
         <div className='sidebar__list sidebar-list sidebar-list--place' id='sidebar-scroll'>
           <div className='sidebar-list__title'>Места <span className='sidebar-list__see-all' onClick={(()=>props.changeList(''))}>Смотреть все</span></div>
+          <Scrollbars style={{  maxHeight:90+"%" }}
+           autoHide
+           autoHideTimeout={2000}
+           thumbMinSize={30}
+           universal={true}
+          >
           <List size="large">
-          
+
           {props.listPlace.length !==0?props.listPlace.map((el:any,i:number) => {
               return (
                 <div className='sidebar-list__item' onClick={() => props.goToMarker(el)} key={i}>
@@ -96,8 +103,9 @@ function itemCheck(item:any) {
                 </div>
               )
             }):''}
-           
+
           </List>
+          </Scrollbars>
         </div>
 
       </div>

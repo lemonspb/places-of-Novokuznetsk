@@ -3,40 +3,38 @@
   width: 100%;
 }
 
-.popup{
-&__text{
-  font-size: 16px;
-  margin-bottom: 10px;
-}
+.popup {
+  &__text {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
 
-
- &__image{
-   width: 100%;
-   margin-bottom: 15px;
- }
- &__body{
-   display: flex;
- }
-&__user-name{
-  font-size: 14px;
-  margin-bottom: 5px;
-  font-weight: 600;
-  
+  &__image {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  &__body {
+    display: flex;
+  }
+  &__user-name {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  &__date {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 11px;
+  }
+  &__footer {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+  }
+  &__delete {
+    cursor: pointer;
+    font-size: 20px;
+  }
 }
-&__date{
-  color: rgba(0,0,0,0.45);
-  font-size: 11px;
-}
-&__footer{
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-}
-&__delete{
-  cursor: pointer;
-  font-size: 20px;
-}
-}
-.leaflet-control-attribution{
+.leaflet-control-attribution {
   display: none;
 }
