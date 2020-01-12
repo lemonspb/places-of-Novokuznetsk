@@ -11,7 +11,6 @@ export interface ModalProp {
     }
   }
 
-
  const  ModalMap = (props:ModalProp)=>{
 
     const handleCancel = () =>{

@@ -77,8 +77,6 @@ const EditAccountPage = (props) => {
   }
 
 
-
-
   return (
     <div className='form-wrap'>
       <UploadComponent getImage={getImage} className='form__upload'/>

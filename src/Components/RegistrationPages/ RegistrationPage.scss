@@ -10,8 +10,6 @@
   background-repeat: no-repeat;
   background-size: cover;
 
-
-
   h3 {
     z-index: 1;
     color: #efc034;
@@ -43,12 +41,11 @@
     color: red;
   }
 }
-.form__upload.ant-upload-picture-card-wrapper{
+.form__upload.ant-upload-picture-card-wrapper {
   width: auto;
 
-  .ant-upload.ant-upload-select-picture-card{
-width: 300px;
-height: 300px;
+  .ant-upload.ant-upload-select-picture-card {
+    width: 300px;
+    height: 300px;
   }
-  }
-  
+}
