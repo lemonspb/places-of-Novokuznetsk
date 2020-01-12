@@ -18,8 +18,6 @@ export interface ModalProp {
         props.modalClose(false)
     }
 
-
-
     return (
       <div>
         <Modal

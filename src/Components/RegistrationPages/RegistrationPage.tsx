@@ -4,7 +4,7 @@ import firebases from "../../services/base"
 import { Button, Form,Input,Icon } from 'antd';
 import { AuthContext } from "../Auth/Auth";
 import './ RegistrationPage.scss'
-const SignUp = (props,{ history }) => {
+const SignUp = (props:any) => {
 
   const { currentUser } = useContext(AuthContext);
   const [ registerError, setRegisterError ] = useState()
@@ -12,7 +12,7 @@ const SignUp = (props,{ history }) => {
   const handleSignUp = useCallback( event => {
  
     event.preventDefault();
-        props.form.validateFields((err, values) => {
+        props.form.validateFields((err:any, values:any) => {
         if (!err) {
           console.log('Received values of form: ', values);
           
@@ -23,7 +23,6 @@ const SignUp = (props,{ history }) => {
           setRegisterError('Этот email  уже используется другим аккаунтом!')
         
         });
-      history.push("/");
         
           
        
@@ -31,7 +30,7 @@ const SignUp = (props,{ history }) => {
         
     })
    
-  }, [history, props.form]);
+  }, [ props.form]);
 
   if (currentUser) {
 

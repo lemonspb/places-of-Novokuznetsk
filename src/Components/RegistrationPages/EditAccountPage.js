@@ -7,7 +7,7 @@ import  UploadComponent  from '../UploadComponent/UploadComponent'
 import './ RegistrationPage.scss'
 
 
-const EditAccountPage = (props, { history }) => {
+const EditAccountPage = (props) => {
 
   const { currentUser } = useContext(AuthContext);
   const [newName, setNewName] = useState([]);

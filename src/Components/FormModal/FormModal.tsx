@@ -11,16 +11,26 @@ import  UploadComponent from '../UploadComponent/UploadComponent'
 
 export interface FormProp {
 
-
-  latLng: {
-    lat: number,
-    lng: number
+children:{
+  0:{
+    latLng: {
+      lat: number,
+      lng: number
+    }
   }
-  form: any
+  1:{
+    modalClose:()=> void;
+  }
+  
+}
+form: any
+
+ 
 }
 
 const FormModal = (props: any) => {
 
+  console.log(props.children)
   const { currentUser } = useContext(AuthContext);
   const [visiblePopup, setVisiblePopup] = useState(false)
   const [imageFile, setImageFile] = useState<any>('')
@@ -77,10 +87,6 @@ const FormModal = (props: any) => {
               text: '',
               place: ''
             });
-        
-
-
-
 
       }
     });

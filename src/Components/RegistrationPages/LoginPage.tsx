@@ -5,14 +5,14 @@ import { Button, Form,Input,Icon } from 'antd';
 import { AuthContext } from "../Auth/Auth";
 import './ RegistrationPage.scss'
 
-const LogIn = (props,{ history }) => {
+const LogIn = (props:any) => {
 
     const { currentUser } = useContext(AuthContext);
     const [ registerError, setRegisterError ] = useState('')
 
   const handleSignUp = useCallback( event => {
     event.preventDefault();
-        props.form.validateFields((err, values) => {
+        props.form.validateFields((err:any, values:any) => {
         if (!err) {
           console.log('Received values of form: ', values);
        firebases
@@ -21,11 +21,10 @@ const LogIn = (props,{ history }) => {
  
           setRegisterError('Нет записи пользователя, соответствующей этому идентификатору. Пользователь, возможно, был удален.')
         });
-      history.push("/");
           }      
     })
    
-  }, [history,props.form]);
+  }, [props.form]);
 
   if (currentUser) {
     return <Redirect to="/" />;

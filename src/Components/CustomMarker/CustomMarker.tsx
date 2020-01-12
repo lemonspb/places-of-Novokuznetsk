@@ -6,28 +6,26 @@ import { Avatar, Icon } from 'antd';
 export interface CustomMarkerProp {
   element: any | null,
   currentUserComments: any,
-  deleteComments: Function
+  deleteComments: (element: any) => void,
   openNote: any,
   setOpenNote: any
 }
 
-
-
 const CustomMarker = (props: CustomMarkerProp) => {
   const { currentUser } = useContext(AuthContext)
-  const markerRef: any = useRef();
-  const imageRef: any = useRef()
-  const popupRef: any = useRef()
-  useEffect(()=> {
-  
-    if (!markerRef.current || props.element !== props.openNote)return;
-  
+  const markerRef: any = useRef(null);
+  const imageRef: any = useRef(null)
+  const popupRef: any = useRef(null)
+  useEffect(() => {
+
+    if (!markerRef.current || props.element !== props.openNote) return;
+
     markerRef.current.leafletElement.openPopup()
 
 
   }, [props.openNote, markerRef, props.element]
   )
- 
+
   return (
     <Marker position={[props.element.latLng.lat, props.element.latLng.lng]} ref={markerRef} >
       <Popup onOpen={() => { props.setOpenNote(props.element) }} ref={popupRef}>
