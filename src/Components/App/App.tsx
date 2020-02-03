@@ -91,15 +91,12 @@ const App: React.FC = () => {
 
 
   const goToMarker = (element: IComment) => {
-    mapPromise(  mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))).then((result) => {
-      setOpenNote(element)
-      setZoomMap(19);
-
-
-
-    })
+        mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
+        setOpenNote(element) 
+        setZoomMap(19);
 
   }
+console.log('123456789')
 
   useEffect(() => {
 
@@ -126,7 +123,6 @@ const App: React.FC = () => {
       <Header />
       <SideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
       <MobileSideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
-
       <LeafletMap
         ref={mapRef}
         onClick={mapGet}
@@ -144,7 +140,6 @@ const App: React.FC = () => {
         duration={1}
         maxBoundsViscosity={1.0}
         maxBounds={bounds}
-
       >
         {window.innerWidth < 767 ? <ZoomControl position="topleft" /> : <ZoomControl position="bottomright" />}
 

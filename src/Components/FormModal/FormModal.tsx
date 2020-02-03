@@ -30,7 +30,6 @@ form: any
 
 const FormModal = (props: any) => {
 
-  console.log(props.children)
   const { currentUser } = useContext(AuthContext);
   const [visiblePopup, setVisiblePopup] = useState(false)
   const [imageFile, setImageFile] = useState<any>('')
@@ -70,7 +69,9 @@ const FormModal = (props: any) => {
             return snap
             }).then((snap: any)=>{
               if(imageFile){
-               const imgStgRef = firebases.storage().ref("CommentImage/" + snap.key + `/${imageFile.file.name}`).put(imageFile.file.originFileObj);
+               const imgStgRef = firebases.storage()
+               .ref("CommentImage/" + snap.key + `/${imageFile.file.name}`)
+               .put(imageFile.file.originFileObj);
                imgStgRef.then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
                   firebases.database().ref(`placeNVKZ/${snap.key}`).update({
@@ -118,14 +119,14 @@ const FormModal = (props: any) => {
 
         </Form.Item>
         <Form.Item className='story-form__wrap-button'>
-          {!currentUser ? <Popover
+          {!currentUser 
+          ? <Popover
             content={
               <div>
                 <div>чтобы оставить записку о месте нужно <Link to='/signup'>Зарегистрироваться</Link> или</div>
                 <Link to='/login'>Войти</Link>
               </div>
             }
-
             trigger="click"
             visible={visiblePopup}
             onVisibleChange={handleVisibleChange}
@@ -133,7 +134,8 @@ const FormModal = (props: any) => {
             <Button type="primary" htmlType="submit" className="story-form__button">
               Готово!
           </Button>
-          </Popover> : <Button type="primary" htmlType="submit" className="story-form__button">
+          </Popover> 
+          : <Button type="primary" htmlType="submit" className="story-form__button">
               Готово!
           </Button>}
         </Form.Item>

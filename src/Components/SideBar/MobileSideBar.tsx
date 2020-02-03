@@ -71,11 +71,17 @@ const MobileSideBar = (props: SidebarProp) => {
 
 
 
-
   return (
     <>
-      <div className={`mobile-sidebar ${closesideBar ? 'mobile-sidebar__close' : 'mobile-sidebar__open'}`}>
-        <div onClick={closeSideBar} className='mobile-sidebar__toggle'><Icon type="caret-up" className={`${closesideBar ? 'mobile-sidebar__toggle--open' : 'mobile-sidebar__toggle--close'}`} /></div>
+      <div className={`mobile-sidebar 
+      ${closesideBar 
+      ? 'mobile-sidebar__close' 
+      : 'mobile-sidebar__open'}`}>
+        <div onClick={closeSideBar} className='mobile-sidebar__toggle'>
+          <Icon type="caret-up" className={`
+          ${closesideBar 
+          ? 'mobile-sidebar__toggle--open' 
+          : 'mobile-sidebar__toggle--close'}`} /></div>
 
         <div className='mobile-sidebar__history mobile-sidebar-history'>
           <div className='mobile-sidebar-history__title'>Истории</div>
@@ -86,7 +92,9 @@ const MobileSideBar = (props: SidebarProp) => {
                 return (
                   <div className='mobile-sidebar-history__user' onClick={(() => props.changeList(el.userId))} key={i}>
 
-                    {el.avatar ? <Avatar size="large" src={el.avatar} /> : <Avatar size="large" icon="user" />}
+                    {el.avatar 
+                      ? <Avatar size="large" src={el.avatar} /> 
+                      : <Avatar size="large" icon="user" />}
 
                     <span className='mobile-sidebar-history__name'>{el.username}</span>
                   </div>
@@ -96,7 +104,8 @@ const MobileSideBar = (props: SidebarProp) => {
           </div>
         </div>
         <div className='mobile-sidebar__place mobile-sidebar-place'>
-          <div className='mobile-sidebar-place__title'>Места <span className='mobile-sidebar-place__see-all' onClick={(() => props.changeList(''))}>Смотреть все</span></div>
+          <div className='mobile-sidebar-place__title'>Места 
+          <span className='mobile-sidebar-place__see-all' onClick={(() => props.changeList(''))}>Смотреть все</span></div>
           <Swiper {...params2}>
             {props.listPlace.map((el: any, i: number) => {
               return (

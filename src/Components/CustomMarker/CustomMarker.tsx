@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import { Marker, Popup, } from 'react-leaflet'
 import { AuthContext } from "../Auth/Auth"
 import { Avatar, Icon } from 'antd';
@@ -25,14 +25,17 @@ const CustomMarker = (props: CustomMarkerProp) => {
 
   }, [props.openNote, markerRef, props.element]
   )
-
   return (
     <Marker position={[props.element.latLng.lat, props.element.latLng.lng]} ref={markerRef} >
       <Popup onOpen={() => { props.setOpenNote(props.element) }} ref={popupRef}>
         <div className='popup'>
           <h1 className='popup__title'>{props.element.place}</h1>
-          <div className='popup__user-name'> Автор:  {props.element.avatar ? <Avatar size="large" src={props.element.avatar} /> : <Avatar size="large" icon="user" />}  {props.element.username}</div>
-          {props.element.commentImage ? <img src={props.element.commentImage} alt="" className='popup__image' ref={imageRef} /> : null}
+          <div className='popup__user-name'> Автор:  {props.element.avatar 
+            ? <Avatar size="large" src={props.element.avatar} /> 
+            : <Avatar size="large" icon="user" />}  {props.element.username}</div>
+          {props.element.commentImage 
+            ? <img src={props.element.commentImage} alt="" className='popup__image' ref={imageRef} /> 
+            : null}
           <div className='popup__text'>
             {props.element.text}
           </div>
@@ -40,7 +43,9 @@ const CustomMarker = (props: CustomMarkerProp) => {
 
             <div className='popup__date'> Дата: {props.element.date}</div>
 
-            {currentUser && props.currentUserComments.includes(props.element.commentId) ? <div onClick={() => { props.deleteComments(props.element) }} className='popup__delete'><Icon type="delete" /></div> : null}
+            {currentUser && props.currentUserComments.includes(props.element.commentId) 
+              ? <div onClick={() => { props.deleteComments(props.element) }} className='popup__delete'><Icon type="delete" /></div> 
+              : null}
 
           </div>
         </div>
