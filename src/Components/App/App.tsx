@@ -89,14 +89,12 @@ const App: React.FC = () => {
     });
   }
 
-
   const goToMarker = (element: IComment) => {
         mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
         setOpenNote(element) 
         setZoomMap(19);
 
   }
-console.log('123456789')
 
   useEffect(() => {
 
