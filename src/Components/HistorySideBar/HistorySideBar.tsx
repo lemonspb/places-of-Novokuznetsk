@@ -10,16 +10,25 @@ import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
 export interface HistorySideBar {
     storyFromMarker: any
+    closeSideBar: any
+    setCloseSideBar:any
 }
 
 
 const HistorySideBar = (props: HistorySideBar) => {
-
-console.log(props.storyFromMarker)
-
+   
   return (
     <>
-      <div className='history-sidebar'>
+      <div className={`history-sidebar
+      ${props.closeSideBar 
+      ? 'history-sidebar__menu-true' 
+      : 'history-sidebar__menu-false'}`}>
+        <div onClick={() => props.setCloseSideBar(!props.closeSideBar)} className='history-sidebar__toggle'>
+          <Icon type="caret-right" className={`
+          ${props.closeSideBar
+          ? 'history-sidebar__toggle--open' 
+          : 'history-sidebar__toggle--close'}`} />
+          </div>
         <div className='history-sidebar__top history-sidebar-top'>
             <div className='history-sidebar-top__userblock history-sidebar-userblock'>
         <Avatar  shape="square" size={100} icon="user" src={props.storyFromMarker.avatar} className='history-sidebar-userblock__avatar'/>

@@ -17,7 +17,7 @@ export interface SidebarProp {
 
 const SideBar = (props: SidebarProp) => {
   const [place, setPlace] = useState<any>([])
-  const [closesideBar, setCloseSideBar] = useState(false)
+  const [closeSideBar, setCloseSideBar] = useState(false)
   let tmpArray: any = [];
   const params = {
     slidesPerView: 3,
@@ -33,8 +33,8 @@ const SideBar = (props: SidebarProp) => {
     renderNextButton: () => <div className="swiper-button-next"><Icon type="right" /></div>,
   }
 
-  const closeSideBar = () => {
-    setCloseSideBar(!closesideBar)
+  const onCloseSideBar = () => {
+    setCloseSideBar(!closeSideBar)
   }
 
   useEffect(() => {
@@ -60,12 +60,12 @@ const SideBar = (props: SidebarProp) => {
   return (
     <>
       <div className={`sidebar 
-      ${closesideBar 
+      ${closeSideBar 
       ? 'active-menu-true' 
       : 'active-menu-false'}`}>
-        <div onClick={closeSideBar} className='sidebar__toggle'>
+        <div onClick={onCloseSideBar} className='sidebar__toggle'>
           <Icon type="caret-right" className={`
-          ${closesideBar 
+          ${closeSideBar 
           ? 'sidebar__toggle--open' 
           : 'sidebar__toggle--close'}`} />
           </div>
@@ -115,7 +115,7 @@ const SideBar = (props: SidebarProp) => {
 
         </div>
       </div>
-      {props.storyFromMarker && <HistorySideBar storyFromMarker={props.storyFromMarker} />}
+      {props.storyFromMarker && <HistorySideBar storyFromMarker={props.storyFromMarker}  setCloseSideBar={setCloseSideBar} closeSideBar={closeSideBar} />}
       
    </>
   );
