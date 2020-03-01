@@ -4,6 +4,7 @@ import './Sidebar.scss'
 import { List, Avatar, Icon } from 'antd';
 import Swiper from 'react-id-swiper';
 import { Scrollbars } from 'react-custom-scrollbars';
+import HistorySideBar from '../HistorySideBar/HistorySideBar';
 
 export interface SidebarProp {
   goToMarker: Function
@@ -15,6 +16,7 @@ export interface SidebarProp {
 const SideBar = (props: SidebarProp) => {
   const [place, setPlace] = useState<any>([])
   const [closesideBar, setCloseSideBar] = useState(false)
+  const [storyFromMarker, setStoryFromMarket] = useState()
   let tmpArray: any = [];
   const params = {
     slidesPerView: 3,
@@ -99,7 +101,7 @@ const SideBar = (props: SidebarProp) => {
                 {props.listPlace.length !== 0 &&
                   props.listPlace.map((el: any, i: number) => {
                   return (
-                    <div className='sidebar-list__item' onClick={() => props.goToMarker(el)} key={i}>
+                    <div className='sidebar-list__item' onClick={() => {props.goToMarker(el);setStoryFromMarket(el)}} key={i}>
                       {i + 1}. {el.place}
 
                     </div>
@@ -112,7 +114,9 @@ const SideBar = (props: SidebarProp) => {
 
         </div>
       </div>
-    </>
+      {storyFromMarker && <HistorySideBar storyFromMarker={storyFromMarker} />}
+      
+   </>
   );
 }
 
