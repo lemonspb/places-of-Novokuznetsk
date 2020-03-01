@@ -9,9 +9,10 @@ import 'react-tabs/style/react-tabs.scss';
 
 import 'react-tabs/style/react-tabs.css';
 export interface HistorySideBar {
-    storyFromMarker: any
-    closeSideBar: any
-    setCloseSideBar:any
+    storyFromMarker: any,
+    closeSideBar: any,
+    setCloseSideBar:any,
+    setStoryFromMarker: any
 }
 
 
@@ -23,6 +24,10 @@ const HistorySideBar = (props: HistorySideBar) => {
       ${props.closeSideBar 
       ? 'history-sidebar__menu-true' 
       : 'history-sidebar__menu-false'}`}>
+          {!props.closeSideBar &&<div className='history-sidebar__close' onClick={()=>{props.setStoryFromMarker('')}}>
+           <Icon type="close-circle" />
+          </div>}
+           
         <div onClick={() => props.setCloseSideBar(!props.closeSideBar)} className='history-sidebar__toggle'>
           <Icon type="caret-right" className={`
           ${props.closeSideBar

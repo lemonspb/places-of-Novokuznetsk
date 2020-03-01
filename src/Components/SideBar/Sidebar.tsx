@@ -115,7 +115,7 @@ const SideBar = (props: SidebarProp) => {
 
         </div>
       </div>
-      {props.storyFromMarker && <HistorySideBar storyFromMarker={props.storyFromMarker}  setCloseSideBar={setCloseSideBar} closeSideBar={closeSideBar} />}
+      {props.storyFromMarker && <HistorySideBar setStoryFromMarker={props.setStoryFromMarker} storyFromMarker={props.storyFromMarker}  setCloseSideBar={setCloseSideBar} closeSideBar={closeSideBar} />}
       
    </>
   );
