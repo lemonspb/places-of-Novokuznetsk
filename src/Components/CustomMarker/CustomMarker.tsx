@@ -11,7 +11,9 @@ export interface CustomMarkerProp {
 
 const CustomMarker = (props: CustomMarkerProp) => {
   return (
-    <Marker  iconToRender={<Icon type="crown" />}position={[props.element.latLng.lat, props.element.latLng.lng]} onClick={()=>{props.setStoryFromMarker(props.element); props.setCloseSideBar(false)}}>
+    <Marker  iconToRender={<Icon type="crown" />}
+    position={[props.element.latLng.lat, props.element.latLng.lng]} 
+    onClick={()=>{props.setStoryFromMarker(props.element); props.setCloseSideBar(false)}}>
 
     </Marker>
   )
