@@ -36,6 +36,7 @@ const App: React.FC = () => {
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
   const [latLng, setLatLng] = useState<any>([])
+  const [closeSideBar, setCloseSideBar] = useState(false)
   const [isMarkerOpen, setIsMarkerOpen] = useState(false)
   const bounds = Leaflet.latLngBounds(corner1, corner2)
   const { currentUser } = useContext(AuthContext);
@@ -122,8 +123,11 @@ const App: React.FC = () => {
       <Header />
       <SideBar goToMarker={goToMarker} changeList={changeList} 
       listPlace={markerInfo} setStoryFromMarker={setStoryFromMarker} 
-      storyFromMarker={storyFromMarker} />
-      <MobileSideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
+      storyFromMarker={storyFromMarker}
+      setCloseSideBar={setCloseSideBar}
+      closeSideBar={closeSideBar}
+      />
+      <MobileSideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo}  />
       <LeafletMap
         ref={mapRef}
         onClick={mapGet}
@@ -151,7 +155,7 @@ const App: React.FC = () => {
         <FeatureGroup ref={groupRef}>
           {markerInfo && markerInfo.map((el: any,i:number) => {
             return (
-                <CustomMarker element={el} setStoryFromMarker={setStoryFromMarker}/>
+                <CustomMarker element={el} setStoryFromMarker={setStoryFromMarker} setCloseSideBar={setCloseSideBar}/>
             )
 
           })}
