@@ -7,7 +7,7 @@ import './ RegistrationPage.scss'
 const SignUp = (props: any) => {
 
   const { currentUser } = useContext(AuthContext);
-  const [registerError, setRegisterError] = useState()
+  const [registerError, setRegisterError] = useState('')
 
   const handleSignUp = useCallback(event => {
 
