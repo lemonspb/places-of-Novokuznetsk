@@ -8,7 +8,8 @@ export interface CustomMarkerProp {
   currentUserComments: any,
   deleteComments: (element: any) => void,
   openNote: any,
-  setOpenNote: any
+  setOpenNote: any,
+  setIsMarkerOpen: any,
 }
 
 const CustomMarker = (props: CustomMarkerProp) => {
@@ -21,7 +22,6 @@ const CustomMarker = (props: CustomMarkerProp) => {
     if (!markerRef.current || props.element !== props.openNote) return;
 
     markerRef.current.leafletElement.openPopup()
-
 
   }, [props.openNote, markerRef, props.element]
   )

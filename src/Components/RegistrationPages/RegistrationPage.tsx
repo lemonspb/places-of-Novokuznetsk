@@ -23,9 +23,7 @@ const SignUp = (props: any) => {
             setRegisterError('Этот email  уже используется другим аккаунтом!')
 
           });
-
       }
-
     })
 
   }, [props.form]);

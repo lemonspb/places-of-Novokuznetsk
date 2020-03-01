@@ -35,6 +35,7 @@ const App: React.FC = () => {
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
   const [latLng, setLatLng] = useState<any>([])
+  const [isMarkerOpen, setIsMarkerOpen] = useState(false)
   const bounds = Leaflet.latLngBounds(corner1, corner2)
   const { currentUser } = useContext(AuthContext);
   const mapRef: any = useRef(null)
@@ -90,14 +91,18 @@ const App: React.FC = () => {
   }
 
   const goToMarker = (element: IComment) => {
-        mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
-        setOpenNote(element) 
-        setZoomMap(19);
+             setOpenNote(element)       
+              mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
+              setZoomMap(19);
+        
+        
+         
+        
 
   }
 
   useEffect(() => {
-
+    
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
       const notes = snapshot.val()
 
@@ -148,7 +153,7 @@ const App: React.FC = () => {
         <FeatureGroup ref={groupRef}>
           {markerInfo && markerInfo.map((el: any,i:number) => {
             return (
-                <CustomMarker element={el} currentUserComments={currentUserComments} deleteComments={deleteComment} openNote={openNote} setOpenNote={setOpenNote} key={i} />
+                <CustomMarker element={el} currentUserComments={currentUserComments} deleteComments={deleteComment} openNote={openNote} setOpenNote={setOpenNote} key={i}setIsMarkerOpen={setIsMarkerOpen} />
             )
 
           })}
