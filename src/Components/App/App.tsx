@@ -155,7 +155,7 @@ const App: React.FC = () => {
         <FeatureGroup ref={groupRef}>
           {markerInfo && markerInfo.map((el: any,i:number) => {
             return (
-                <CustomMarker element={el} setStoryFromMarker={setStoryFromMarker} setCloseSideBar={setCloseSideBar}/>
+                <CustomMarker element={el} storyFromMarker={storyFromMarker} setStoryFromMarker={setStoryFromMarker} setCloseSideBar={setCloseSideBar}/>
             )
 
           })}
