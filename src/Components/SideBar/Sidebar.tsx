@@ -13,7 +13,8 @@ export interface SidebarProp {
   setStoryFromMarker: any,
   storyFromMarker: any
   closeSideBar: any,
-  setCloseSideBar: any
+  setCloseSideBar: any,
+  deleteComment: any
 }
 
 
@@ -78,7 +79,9 @@ const SideBar = (props: SidebarProp) => {
                   return (
                     <div className='sidebar-list__user' onClick={(() => props.changeList(el.userId))} key={i}>
 
-                      {el.avatar ? <Avatar size="large" src={el.avatar} /> : <Avatar size="large" icon="user" />}
+                      {el.avatar 
+                        ? <Avatar size="large" src={el.avatar} /> 
+                        : <Avatar size="large" icon="user" />}
 
                       <span className='sidebar-list__name'>{el.username ? el.username : 'неизвестно'}</span>
                     </div>
@@ -114,7 +117,14 @@ const SideBar = (props: SidebarProp) => {
 
         </div>
       </div>
-      {props.storyFromMarker && <HistorySideBar setStoryFromMarker={props.setStoryFromMarker} storyFromMarker={props.storyFromMarker}  setCloseSideBar={props.setCloseSideBar} closeSideBar={props.closeSideBar} />}
+      {props.storyFromMarker && 
+      <HistorySideBar 
+      setStoryFromMarker={props.setStoryFromMarker} 
+      storyFromMarker={props.storyFromMarker}  
+      setCloseSideBar={props.setCloseSideBar} 
+      closeSideBar={props.closeSideBar} 
+      deleteComment={props.deleteComment}
+      />}
       
    </>
   );

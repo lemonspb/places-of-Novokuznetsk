@@ -126,6 +126,7 @@ const App: React.FC = () => {
       storyFromMarker={storyFromMarker}
       setCloseSideBar={setCloseSideBar}
       closeSideBar={closeSideBar}
+      deleteComment={deleteComment}
       />
       <MobileSideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo}  />
       <LeafletMap
