@@ -142,9 +142,12 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-
+        &--active{
+            color:tomato;
+            font-weight: 700;
+        }
         &:hover {
-            color: #842c2d;
+            color: tomato;
 
         }
     }
