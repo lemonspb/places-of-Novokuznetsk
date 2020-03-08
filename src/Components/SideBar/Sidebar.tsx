@@ -35,7 +35,7 @@ const SideBar = (props: SidebarProp) => {
     renderNextButton: () => <div className="swiper-button-next"><Icon type="right" /></div>,
   }
 
- 
+ console.log()
 
   useEffect(() => {
 
@@ -76,13 +76,11 @@ const SideBar = (props: SidebarProp) => {
 
               <Swiper {...params} >
                 {place.filter((item: any) => itemCheck(item.userId)).map((el: any, i: number) => {
+                  let abc = props.listPlace.every((info:any)=>info.userId==el.userId)
                   return (
                     <div className='sidebar-list__user' onClick={(() => props.changeList(el.userId))} key={i}>
-
-                      {el.avatar 
-                        ? <Avatar size="large" src={el.avatar} /> 
-                        : <Avatar size="large" icon="user" />}
-
+                     <Avatar size="large"icon="user" src={el.avatar} className={`sidebar-list__avatar 
+                     ${abc?'sidebar-list__avatar--active':''}`}/> 
                       <span className='sidebar-list__name'>{el.username ? el.username : 'неизвестно'}</span>
                     </div>
                   )

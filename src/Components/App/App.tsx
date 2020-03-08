@@ -71,6 +71,7 @@ const App: React.FC = () => {
 
 
   const changeList = (id: string) => {
+    console.log(markerInfo)
     const group = groupRef.current.leafletElement
     const map = mapRef.current.leafletElement
 

@@ -153,10 +153,13 @@
         cursor: pointer;
         display: flex;
         flex-direction: column;
-
-
-
-
+    }
+    &__avatar{
+        transition: 200ms border ease-in-out;
+        border: 3px solid transparent;
+        &--active{
+            border: 3px solid tomato;
+        }
     }
 
     &__name {

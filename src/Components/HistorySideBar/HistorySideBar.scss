@@ -98,6 +98,27 @@ position: absolute;
         transform: translateX(-591px);
         transition: all 300ms ease-in-out;
     }
+    &__footer{
+     margin-top: 10px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;   
+    }
+    &__date{
+        span{
+            font-weight: 700;
+
+        }
+    }
+    &__delete{
+     svg{
+        font-size: 27px;
+        cursor: pointer;
+        &:hover{
+            color: tomato;
+        }
+     }   
+    }
 }
 .history-sidebar-top{
     box-sizing: border-box;

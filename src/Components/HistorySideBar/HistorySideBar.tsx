@@ -74,7 +74,7 @@ const HistorySideBar = (props: HistorySideBar) => {
                                 {props.storyFromMarker && props.storyFromMarker.text}
                             </div>
                             <div className='history-sidebar__footer'>
-                                <div className='history-sidebar__date'>дата: {props.storyFromMarker.date}</div>
+                                <div className='history-sidebar__date'><span>дата:</span>  {props.storyFromMarker.date}</div>
                                 {currentUser?.uid === props.storyFromMarker.userId
                                 && <Icon type="delete" className='history-sidebar__delete'
                                     onClick={() => { props.deleteComment(props.storyFromMarker); props.setStoryFromMarker('') }}/>}
