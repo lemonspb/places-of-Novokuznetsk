@@ -24,7 +24,6 @@ const HistorySideBar = (props: HistorySideBar) => {
 
     const { currentUser } = useContext(AuthContext);
 
-    console.log(props.storyFromMarker, currentUser)
 
 
     return (
@@ -53,7 +52,7 @@ const HistorySideBar = (props: HistorySideBar) => {
                             {props.storyFromMarker.username || 'Неизветсно'}
                         </div>
                     </div>
-                
+
                 </div>
 
                 <Tabs className='history-sidebar__tabs'>
@@ -64,34 +63,34 @@ const HistorySideBar = (props: HistorySideBar) => {
 
                     <TabPanel >
                         <div className='history-sidebar__tabPanel'>
-                        <Scrollbars style={{ maxHeight: 90 + "%" }}
-                            thumbMinSize={30}
-                            universal={true}>
-                                    <div className="history-sidebar-top__title">
-                        {props.storyFromMarker.place}
-                    </div>
-                            <div className='history-sidebar__image'>
+                            <Scrollbars style={{ maxHeight: 90 + "%" }}
+                                thumbMinSize={30}
+                                universal={true}>
+                                <div className="history-sidebar-top__title">
+                                    {props.storyFromMarker.place}
+                                </div>
+                                <div className='history-sidebar__image'>
 
-                                <img src={props.storyFromMarker.commentImage} />
-                            </div>
+                                    <img src={props.storyFromMarker.commentImage} />
+                                </div>
 
-                            <div className='history-sidebar__text'>
-                                {props.storyFromMarker && props.storyFromMarker.text}
-                            </div>
-                            <div className='history-sidebar__footer'>
-                                <div className='history-sidebar__date'><span>дата:</span>  {props.storyFromMarker.date}</div>
-                                {currentUser?.uid === props.storyFromMarker.userId
-                                && <Icon type="delete" className='history-sidebar__delete'
-                                    onClick={() => { props.deleteComment(props.storyFromMarker); props.setStoryFromMarker('') }}/>}
-                            </div>
+                                <div className='history-sidebar__text'>
+                                    {props.storyFromMarker && props.storyFromMarker.text}
+                                </div>
+                                <div className='history-sidebar__footer'>
+                                    <div className='history-sidebar__date'><span>дата:</span>  {props.storyFromMarker.date}</div>
+                                    {currentUser ?.uid === props.storyFromMarker.userId
+                                        && <Icon type="delete" className='history-sidebar__delete'
+                                            onClick={() => { props.deleteComment(props.storyFromMarker); props.setStoryFromMarker('') }} />}
+                                </div>
 
 
-                        </Scrollbars>
+                            </Scrollbars>
                         </div>
                     </TabPanel>
                     <TabPanel>
-                    <div className='history-sidebar__tabPanel'>
-                    <CommentList  storyFromMarker={props.storyFromMarker}/>
+                        <div className='history-sidebar__tabPanel'>
+                            <CommentList storyFromMarker={props.storyFromMarker} setStoryFromMarker={props.setStoryFromMarker} />
                         </div>
                     </TabPanel>
                 </Tabs>

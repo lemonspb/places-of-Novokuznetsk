@@ -8,11 +8,13 @@ import Editor from './Editor'
 import { Scrollbars } from 'react-custom-scrollbars';
 import './CommentList.scss'
 
-const CommentList = ({storyFromMarker}:any) =>{
+const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
 
+    console.log(storyFromMarker)
     const [value, setValue] = useState('')
     const { currentUser } = useContext(AuthContext);
     const [commentList, setCommentList] = useState<any>([])
+    const [submitting, setSubmiting] = useState(false)
     console.log(storyFromMarker)
 
 
@@ -24,7 +26,6 @@ const CommentList = ({storyFromMarker}:any) =>{
         return;
  
       }
-    
       firebases
        .database()
        .ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/`)
@@ -32,11 +33,10 @@ const CommentList = ({storyFromMarker}:any) =>{
         text:value,
         username: currentUser.displayName,
         avatar: currentUser.photoURL,
-        
-
         date: format(new Date(), 'd MMMM yyyy', { locale: ru }),
         userId: currentUser.uid,
          })
+         setValue('')
       }
         useEffect(() => {
     
@@ -46,12 +46,14 @@ const CommentList = ({storyFromMarker}:any) =>{
             
             setCommentList(Object.values(comments))
             }
+            else{
+            }
           })
         },[storyFromMarker]);
         
     return (
       <div>
-        {commentList && commentList.length > 0 &&
+        {storyFromMarker.answers &&  commentList && commentList.length > 0?
           <Scrollbars style={{ height: 385 + "px" }}
           thumbMinSize={30}
           universal={true}>
@@ -60,7 +62,6 @@ const CommentList = ({storyFromMarker}:any) =>{
           itemLayout="horizontal"
           dataSource={commentList}
           renderItem={(item:any) => {
-            console.log(item)
            return  (
             <li>
               <Comment
@@ -72,7 +73,7 @@ const CommentList = ({storyFromMarker}:any) =>{
             </li>
           )}}
         />
-        </Scrollbars>
+        </Scrollbars>:'тут пока нет комментариев'
           }
         <Comment
         avatar={
@@ -85,7 +86,7 @@ const CommentList = ({storyFromMarker}:any) =>{
           <Editor
             onChange={handleChange}
             onSubmit={handleSubmit}
-            submitting={false}
+            submitting={submitting}
             value={value}
           />
         }
