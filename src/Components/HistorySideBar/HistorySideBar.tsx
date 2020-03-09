@@ -7,7 +7,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import CommentList from '../CommentList/CommentList'
 import 'react-tabs/style/react-tabs.scss';
 
-import 'react-tabs/style/react-tabs.css';
 
 
 export interface HistorySideBar {
@@ -16,6 +15,7 @@ export interface HistorySideBar {
     setCloseSideBar: any,
     setStoryFromMarker: any,
     deleteComment: any
+    listPlace: any
 }
 
 
@@ -90,7 +90,8 @@ const HistorySideBar = (props: HistorySideBar) => {
                     </TabPanel>
                     <TabPanel>
                         <div className='history-sidebar__tabPanel'>
-                            <CommentList storyFromMarker={props.storyFromMarker} setStoryFromMarker={props.setStoryFromMarker} />
+                            <CommentList
+                             storyFromMarker={props.storyFromMarker} setStoryFromMarker={props.setStoryFromMarker} />
                         </div>
                     </TabPanel>
                 </Tabs>

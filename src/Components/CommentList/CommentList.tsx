@@ -14,7 +14,6 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
     const [value, setValue] = useState('')
     const { currentUser } = useContext(AuthContext);
     const [commentList, setCommentList] = useState<any>([])
-    const [submitting, setSubmiting] = useState(false)
     console.log(storyFromMarker)
 
 
@@ -26,6 +25,7 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
         return;
  
       }
+    
       firebases
        .database()
        .ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/`)
@@ -33,6 +33,8 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
         text:value,
         username: currentUser.displayName,
         avatar: currentUser.photoURL,
+        
+
         date: format(new Date(), 'd MMMM yyyy', { locale: ru }),
         userId: currentUser.uid,
          })
@@ -46,14 +48,12 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
             
             setCommentList(Object.values(comments))
             }
-            else{
-            }
           })
-        },[storyFromMarker]);
+        },[]);
         
     return (
       <div>
-        {storyFromMarker.answers &&  commentList && commentList.length > 0?
+        {storyFromMarker.answers && commentList && commentList.length > 0?
           <Scrollbars style={{ height: 385 + "px" }}
           thumbMinSize={30}
           universal={true}>
@@ -86,7 +86,7 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
           <Editor
             onChange={handleChange}
             onSubmit={handleSubmit}
-            submitting={submitting}
+            submitting={false}
             value={value}
           />
         }

@@ -41,6 +41,8 @@ const App: React.FC = () => {
   const mapRef: any = useRef(null)
   const groupRef: any = useRef(null)
 
+  console.log(storyFromMarker)
+
   const mapPromise = (array: any) => {
     return new Promise((resolve) => {
       resolve(array)

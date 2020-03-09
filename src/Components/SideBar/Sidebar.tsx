@@ -35,7 +35,6 @@ const SideBar = (props: SidebarProp) => {
     renderNextButton: () => <div className="swiper-button-next"><Icon type="right" /></div>,
   }
 
- console.log(props.storyFromMarker)
 
   useEffect(() => {
 
@@ -77,11 +76,11 @@ const SideBar = (props: SidebarProp) => {
               <Swiper {...params} >
                 {place.filter((item: any) => itemCheck(item.userId)).map((el: any, i: number) => {
                   ///if userId all list items is the same as the active
-                  let activeUserList = props.listPlace.every((info:any)=>info.userId==el.userId)
+                  let activeUserList = props.listPlace.every((info: any) => info.userId === el.userId)
                   return (
                     <div className='sidebar-list__user' onClick={(() => props.changeList(el.userId))} key={i}>
-                     <Avatar size="large"icon="user" src={el.avatar} className={`sidebar-list__avatar 
-                     ${activeUserList?'sidebar-list__avatar--active':''}`}/> 
+                      <Avatar size="large" icon="user" src={el.avatar} className={`sidebar-list__avatar 
+                     ${activeUserList ? 'sidebar-list__avatar--active' : ''}`} />
                       <span className='sidebar-list__name'>{el.username ? el.username : 'неизвестно'}</span>
                     </div>
                   )
@@ -103,7 +102,9 @@ const SideBar = (props: SidebarProp) => {
                 {props.listPlace.length !== 0 &&
                   props.listPlace.map((el: any, i: number) => {
                   return (
-                    <div className={`sidebar-list__item ${props.storyFromMarker?.commentId === el.commentId  ?`sidebar-list__item--active`:''}`} onClick={() => {props.goToMarker(el);props.setStoryFromMarker(el)}} key={i}>
+                    <div className={`sidebar-list__item 
+                    ${props.storyFromMarker?.commentId === el.commentId  ?`sidebar-list__item--active`:''}`} 
+                    onClick={() => {props.goToMarker(el);props.setStoryFromMarker(el)}} key={i}>
                       {i + 1}. {el.place}
 
                     </div>
@@ -123,6 +124,7 @@ const SideBar = (props: SidebarProp) => {
       setCloseSideBar={props.setCloseSideBar} 
       closeSideBar={props.closeSideBar} 
       deleteComment={props.deleteComment}
+      listPlace={props.listPlace}
       />}
       
    </>

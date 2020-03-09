@@ -62,6 +62,7 @@ const FormModal = (props: any) => {
             place: values.place,
             avatar: currentUser.photoURL,
             date: format(new Date(), 'd MMMM yyyy', { locale: ru }),
+            answers: {},
           }).then((snap: any) => {
             firebases.database().ref(`placeNVKZ/${snap.key}`).update({
               commentId: snap.key
