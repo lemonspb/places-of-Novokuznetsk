@@ -10,11 +10,9 @@ import './CommentList.scss'
 
 const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
 
-    console.log(storyFromMarker)
     const [value, setValue] = useState('')
     const { currentUser } = useContext(AuthContext);
     const [commentList, setCommentList] = useState<any>([])
-    console.log(storyFromMarker)
 
 
    const handleChange = (e:any) => {
@@ -33,10 +31,12 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
         text:value,
         username: currentUser.displayName,
         avatar: currentUser.photoURL,
-        
-
         date: format(new Date(), 'd MMMM yyyy', { locale: ru }),
         userId: currentUser.uid,
+         }).then((snap:any)=>{
+          firebases.database().ref(`placeNVKZ/${storyFromMarker.commentId}/answers/${snap.key}`).update({
+            answersId: snap.key
+          })
          })
          setValue('')
       }
@@ -51,6 +51,12 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
           })
         },[]);
         
+        
+  const deleteAnswer = (id:string) => {
+    firebases.database().ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/${id}`).remove()
+  }
+
+
     return (
       <div>
         {storyFromMarker.answers && commentList && commentList.length > 0?
@@ -65,6 +71,9 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
            return  (
             <li>
               <Comment
+                actions={[currentUser && currentUser.uid === item.userId && 
+                   <span key="comment-nested-reply-to" 
+                   onClick={()=>deleteAnswer(item.answersId)}>удалить</span>]}
                 author={item.username}
                 avatar={item.avatar}
                 content={item.text}
