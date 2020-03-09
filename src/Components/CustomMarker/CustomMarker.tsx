@@ -22,7 +22,7 @@ const [activeMarkers, setActiveMarkers ] = useState(false)
   else{
     setActiveMarkers(false)
   }
-  }, [props.storyFromMarker]);
+  }, [props.storyFromMarker,props.element.commentId]);
   
   
 const activeMarker = new L.Icon({

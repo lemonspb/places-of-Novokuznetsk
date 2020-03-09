@@ -53,9 +53,7 @@ const HistorySideBar = (props: HistorySideBar) => {
                             {props.storyFromMarker.username || 'Неизветсно'}
                         </div>
                     </div>
-                    <div className="history-sidebar-top__title">
-                        {props.storyFromMarker.place}
-                    </div>
+                
                 </div>
 
                 <Tabs className='history-sidebar__tabs'>
@@ -64,10 +62,14 @@ const HistorySideBar = (props: HistorySideBar) => {
                         <Tab>Комментарии</Tab>
                     </TabList>
 
-                    <TabPanel className='history-sidebar__tabPanel'>
+                    <TabPanel >
+                        <div className='history-sidebar__tabPanel'>
                         <Scrollbars style={{ maxHeight: 90 + "%" }}
                             thumbMinSize={30}
                             universal={true}>
+                                    <div className="history-sidebar-top__title">
+                        {props.storyFromMarker.place}
+                    </div>
                             <div className='history-sidebar__image'>
 
                                 <img src={props.storyFromMarker.commentImage} />
@@ -85,9 +87,12 @@ const HistorySideBar = (props: HistorySideBar) => {
 
 
                         </Scrollbars>
+                        </div>
                     </TabPanel>
-                    <CommentList />
                     <TabPanel>
+                    <div className='history-sidebar__tabPanel'>
+                    <CommentList  storyFromMarker={props.storyFromMarker}/>
+                        </div>
                     </TabPanel>
                 </Tabs>
 
