@@ -71,10 +71,8 @@ const App: React.FC = () => {
 
 
   const changeList = (id: string) => {
-    console.log(markerInfo)
     const group = groupRef.current.leafletElement
     const map = mapRef.current.leafletElement
-
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
 
       const listUsers = snapshot.val()
@@ -94,8 +92,8 @@ const App: React.FC = () => {
   }
 
   const goToMarker = (element: IComment) => {
-
-              mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
+              mapRef.current.leafletElement
+              .panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
               setZoomMap(19);
   }
 
@@ -122,8 +120,11 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Header />
-      <SideBar goToMarker={goToMarker} changeList={changeList} 
-      listPlace={markerInfo} setStoryFromMarker={setStoryFromMarker} 
+      <SideBar 
+      goToMarker={goToMarker} 
+      changeList={changeList} 
+      listPlace={markerInfo} 
+      setStoryFromMarker={setStoryFromMarker} 
       storyFromMarker={storyFromMarker}
       setCloseSideBar={setCloseSideBar}
       closeSideBar={closeSideBar}
@@ -157,13 +158,20 @@ const App: React.FC = () => {
         <FeatureGroup ref={groupRef}>
           {markerInfo && markerInfo.map((el: any,i:number) => {
             return (
-                <CustomMarker element={el} storyFromMarker={storyFromMarker} setStoryFromMarker={setStoryFromMarker} setCloseSideBar={setCloseSideBar}/>
+                <CustomMarker 
+                element={el} 
+                storyFromMarker={storyFromMarker} 
+                setStoryFromMarker={setStoryFromMarker} 
+                setCloseSideBar={setCloseSideBar}/>
             )
 
           })}
         </FeatureGroup>
       </LeafletMap>
-      <ModalMap modalOpen={modalOpen} modalClose={modalClose} latLng={latLng}  />
+      <ModalMap 
+      modalOpen={modalOpen} 
+      modalClose={modalClose} 
+      latLng={latLng} />
     </div>
   );
 }

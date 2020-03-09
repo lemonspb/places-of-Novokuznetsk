@@ -16,6 +16,7 @@ const [activeMarkers, setActiveMarkers ] = useState(false)
 
   useEffect(() => {
   if(props.storyFromMarker?.commentId === props.element.commentId){
+    console.log(props.storyFromMarker)
     setActiveMarkers(true)
   }
   else{
@@ -26,10 +27,17 @@ const [activeMarkers, setActiveMarkers ] = useState(false)
   
 const activeMarker = new L.Icon({
   iconUrl: require('../../Svg/activeMarker.svg'),
+  iconSize:     [38, 40],
+  iconAnchor:   [20, 39], 
+ 
 });
 const defaultMarker = new L.Icon({
   iconUrl: require('../../Svg/defaultMarker.svg'),
+  iconSize:     [38, 40],  
+  iconAnchor:   [20, 39], 
+
 });
+
 
   return (
     <Marker 

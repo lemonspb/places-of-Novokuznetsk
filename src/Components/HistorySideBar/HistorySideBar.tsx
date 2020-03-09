@@ -4,9 +4,12 @@ import './HistorySideBar.scss'
 import { List, Avatar, Icon } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import CommentList from '../CommentList/CommentList'
 import 'react-tabs/style/react-tabs.scss';
 
 import 'react-tabs/style/react-tabs.css';
+
+
 export interface HistorySideBar {
     storyFromMarker: any,
     closeSideBar: any,
@@ -83,6 +86,7 @@ const HistorySideBar = (props: HistorySideBar) => {
 
                         </Scrollbars>
                     </TabPanel>
+                    <CommentList />
                     <TabPanel>
                     </TabPanel>
                 </Tabs>
