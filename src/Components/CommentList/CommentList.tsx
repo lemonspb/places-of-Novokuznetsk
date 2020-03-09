@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext,  } from 'react';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import React, { useState, useEffect, useContext, } from 'react';
+import { Comment, Avatar, List,  } from 'antd';
 import firebases from '../../services/base'
 import { AuthContext } from "../Auth/Auth"
 import ru from 'date-fns/locale/ru';
@@ -8,87 +8,93 @@ import Editor from './Editor'
 import { Scrollbars } from 'react-custom-scrollbars';
 import './CommentList.scss'
 
-const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
+const CommentList = ({ storyFromMarker }: any) => {
 
-    const [value, setValue] = useState('')
-    const { currentUser } = useContext(AuthContext);
-    const [commentList, setCommentList] = useState<any>([])
+  const [value, setValue] = useState('')
+  const { currentUser } = useContext(AuthContext);
+  const [commentList, setCommentList] = useState<any>([])
 
 
-   const handleChange = (e:any) => {
-      setValue(e.target.value)
-    };
-    const handleSubmit = () => {
-      if (!value) {
-        return;
- 
-      }
-    
-      firebases
-       .database()
-       .ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/`)
-       .push({
-        text:value,
+  const handleChange = (e: any) => {
+    setValue(e.target.value)
+  };
+  const handleSubmit = () => {
+    if (!value) {
+      return;
+
+    }
+
+    firebases
+      .database()
+      .ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/`)
+      .push({
+        text: value,
         username: currentUser.displayName,
         avatar: currentUser.photoURL,
         date: format(new Date(), 'd MMMM yyyy', { locale: ru }),
         userId: currentUser.uid,
-         }).then((snap:any)=>{
-          firebases.database().ref(`placeNVKZ/${storyFromMarker.commentId}/answers/${snap.key}`).update({
-            answersId: snap.key
-          })
-         })
-         setValue('')
+      }).then((snap: any) => {
+        firebases.database().ref(`placeNVKZ/${storyFromMarker.commentId}/answers/${snap.key}`).update({
+          answersId: snap.key
+        })
+      })
+    setValue('')
+  }
+  useEffect(() => {
+
+    firebases.database().ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/`).on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const comments = snapshot.val()
+        setCommentList(Object.values(comments))
       }
-        useEffect(() => {
-    
-          firebases.database().ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/`).on('value', (snapshot) => {
-            if(snapshot.val()){
-            const comments = snapshot.val()
-            
-            setCommentList(Object.values(comments))
-            }
-          })
-        },[]);
-        
-        
-  const deleteAnswer = (id:string) => {
+      else {
+        setCommentList([])
+
+      }
+    })
+    return () => {
+      setCommentList([])
+    };
+  }, [storyFromMarker.answers]);
+
+
+  const deleteAnswer = (id: string) => {
     firebases.database().ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/${id}`).remove()
   }
 
 
-    return (
-      <div>
-        {storyFromMarker.answers && commentList && commentList.length > 0?
-          <Scrollbars style={{ height: 385 + "px" }}
-          thumbMinSize={30}
-          universal={true}>
+  return (
+    <div>
+
+      <Scrollbars style={{ height: 385 + "px" }}
+        thumbMinSize={30}
+        universal={true}>
         <List
           className="comment-list"
           itemLayout="horizontal"
           dataSource={commentList}
-          renderItem={(item:any) => {
-           return  (
-            <li>
-              <Comment
-                actions={[currentUser && currentUser.uid === item.userId && 
-                   <span key="comment-nested-reply-to" 
-                   onClick={()=>deleteAnswer(item.answersId)}>удалить</span>]}
-                author={item.username}
-                avatar={item.avatar}
-                content={item.text}
-                datetime={item.date}
-              />
-            </li>
-          )}}
+          renderItem={(item: any) => {
+            return (
+              <li>
+                <Comment
+                  actions={[currentUser && currentUser.uid === item.userId &&
+                    <span key="comment-nested-reply-to"
+                      onClick={() => deleteAnswer(item.answersId)}>удалить</span>]}
+                  author={item.username}
+                  avatar={item.avatar}
+                  content={item.text}
+                  datetime={item.date}
+                />
+              </li>
+            )
+          }}
         />
-        </Scrollbars>:'тут пока нет комментариев'
-          }
-        <Comment
+      </Scrollbars>
+      <Comment
         avatar={
           <Avatar
             icon="user"
-            src={currentUser?.photoURL} 
+            src={currentUser ?.photoURL}
           />
         }
         content={
@@ -101,7 +107,7 @@ const CommentList = ({storyFromMarker,setStoryFromMarker}:any) =>{
         }
       />
     </div>
-)
+  )
 }
 
 
