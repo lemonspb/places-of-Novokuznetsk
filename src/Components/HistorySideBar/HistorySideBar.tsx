@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState,useEffect, useContext } from 'react'
 import { AuthContext } from "../Auth/Auth"
 import './HistorySideBar.scss'
 import { List, Avatar, Icon } from 'antd';
@@ -6,6 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import CommentList from '../CommentList/CommentList'
 import 'react-tabs/style/react-tabs.scss';
+import firebases from '../../services/base'
 
 
 
@@ -23,7 +24,24 @@ const HistorySideBar = (props: HistorySideBar) => {
 
 
     const { currentUser } = useContext(AuthContext);
+    const [commentList, setCommentList] = useState<any>([])
 
+    useEffect(() => {
+
+        firebases.database().ref(`/placeNVKZ/${props.storyFromMarker.commentId}/answers/`).on('value', (snapshot) => {
+          if (snapshot.val()) {
+            const comments = snapshot.val()
+            setCommentList(Object.values(comments))
+          }
+          else {
+            setCommentList([])
+    
+          }
+        })
+        return () => {
+          setCommentList([])
+        };
+      }, [props.storyFromMarker.answers]);
 
 
     return (
@@ -58,7 +76,7 @@ const HistorySideBar = (props: HistorySideBar) => {
                 <Tabs className='history-sidebar__tabs'>
                     <TabList className='history-sidebar__tabList'>
                         <Tab>История</Tab>
-                        <Tab>Комментарии</Tab>
+                        <Tab>Комментарии ({  commentList.length  || 0}) </Tab>
                     </TabList>
 
                     <TabPanel >
@@ -91,6 +109,7 @@ const HistorySideBar = (props: HistorySideBar) => {
                     <TabPanel>
                         <div className='history-sidebar__tabPanel'>
                             <CommentList
+                                commentList={commentList}
                              storyFromMarker={props.storyFromMarker} setStoryFromMarker={props.setStoryFromMarker} />
                         </div>
                     </TabPanel>

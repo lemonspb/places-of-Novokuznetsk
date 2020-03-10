@@ -8,11 +8,10 @@ import Editor from './Editor'
 import { Scrollbars } from 'react-custom-scrollbars';
 import './CommentList.scss'
 
-const CommentList = ({ storyFromMarker }: any) => {
+const CommentList = ({ storyFromMarker,commentList }: any) => {
 
   const [value, setValue] = useState('')
   const { currentUser } = useContext(AuthContext);
-  const [commentList, setCommentList] = useState<any>([])
 
 
   const handleChange = (e: any) => {
@@ -40,22 +39,7 @@ const CommentList = ({ storyFromMarker }: any) => {
       })
     setValue('')
   }
-  useEffect(() => {
 
-    firebases.database().ref(`/placeNVKZ/${storyFromMarker.commentId}/answers/`).on('value', (snapshot) => {
-      if (snapshot.val()) {
-        const comments = snapshot.val()
-        setCommentList(Object.values(comments))
-      }
-      else {
-        setCommentList([])
-
-      }
-    })
-    return () => {
-      setCommentList([])
-    };
-  }, [storyFromMarker.answers]);
 
 
   const deleteAnswer = (id: string) => {
