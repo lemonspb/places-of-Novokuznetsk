@@ -12,7 +12,7 @@ const CommentList = ({ storyFromMarker,commentList }: any) => {
 
   const [value, setValue] = useState('')
   const { currentUser } = useContext(AuthContext);
-
+ 
 
   const handleChange = (e: any) => {
     setValue(e.target.value)
@@ -83,6 +83,7 @@ const CommentList = ({ storyFromMarker,commentList }: any) => {
         }
         content={
           <Editor
+           
             onChange={handleChange}
             onSubmit={handleSubmit}
             submitting={false}

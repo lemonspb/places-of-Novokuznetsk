@@ -5,7 +5,7 @@ import { List, Avatar, Icon } from 'antd';
 import Swiper from 'react-id-swiper';
 import { Scrollbars } from 'react-custom-scrollbars';
 import HistorySideBar from '../HistorySideBar/HistorySideBar';
-
+import SearchUsers from '../SearchUsers/SearchUsers'
 export interface SidebarProp {
   goToMarker: Function
   changeList: Function
@@ -20,6 +20,7 @@ export interface SidebarProp {
 
 const SideBar = (props: SidebarProp) => {
   const [place, setPlace] = useState<any>([])
+  const [showSearchUsers, setShowSearchUsers] = useState(false)
   let tmpArray: any = [];
   const params = {
     slidesPerView: 3,
@@ -70,7 +71,7 @@ const SideBar = (props: SidebarProp) => {
           </div>
         <div className='sidebar__inner'>
           <div className='sidebar__list sidebar-list sidebar-list--history' >
-            <div className='sidebar-list__title'>Истории</div>
+            <div className='sidebar-list__title'>Истории  <span onClick={()=>setShowSearchUsers(true)}>Поиск</span></div>
             <div className='sidebar-list__swiper'>
 
               <Swiper {...params} >
@@ -126,8 +127,10 @@ const SideBar = (props: SidebarProp) => {
       deleteComment={props.deleteComment}
       listPlace={props.listPlace}
       />}
-      
-   </>
+
+<SearchUsers listUsers={place}  showSearchUsers={showSearchUsers}/>
+      </>
+   
   );
 }
 

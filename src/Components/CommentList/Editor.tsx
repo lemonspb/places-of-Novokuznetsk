@@ -1,23 +1,52 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import React, { useState, useContext } from 'react';
+import { Form, Button, Popover, Input } from 'antd';
+import { AuthContext } from "../Auth/Auth";
+import { Link } from 'react-router-dom';
 
 
-const { TextArea } = Input; 
 
+const Editor = ({ onChange, value, submitting, onSubmit }: any) => {
 
-const Editor = ({ onChange, value, submitting,onSubmit }:any) => (
-    <div>
-      <Form.Item>
-        <TextArea rows={4} onChange={onChange} value={value} />
-      </Form.Item>
-      <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-          Добавить комментарий
+    const { currentUser } = useContext(AuthContext);
+
+    const { TextArea } = Input;
+    const [visiblePopup, setVisiblePopup] = useState(false)
+
+    const handleVisibleChange = (visible: boolean) => {
+        setVisiblePopup(visible)
+    }
+
+    return (
+        <div>
+            <Form.Item>
+                <TextArea rows={4} onChange={onChange} value={value} />
+            </Form.Item>
+            <Form.Item>
+                {!currentUser
+                    ? <Popover
+                        content={
+                            <div>
+                                <div>чтобы оставить комментарий о месте нужно <Link to='/signup'>Зарегистрироваться</Link> или</div>
+                                <Link to='/login'>Войти</Link>
+                            </div>
+                        }
+                        trigger="click"
+                        visible={visiblePopup}
+                        onVisibleChange={handleVisibleChange}
+
+                    >
+                        <Button htmlType="submit" loading={submitting} type="primary">
+                            Добавить комментарий
         </Button>
-      </Form.Item>
-    </div>
-  );
+                    </Popover>
+                    : <Button type="primary" htmlType="submit" className="story-form__button" onClick={onSubmit}>
+                        Добавить комментарий!
+          </Button>}
 
+            </Form.Item>
+        </div>
+    );
+}
 
 
   export default Editor; 

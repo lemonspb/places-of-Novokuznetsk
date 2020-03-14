@@ -1,0 +1,28 @@
+.search-users{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 1s ease-in-out;
+    background-color: #efc034;
+    &--active{
+        display: block;
+        animation-name: zoom;
+        animation-duration: 1s;
+        transform-origin: 10% 15% 40px;
+
+    }
+    &--hidden{
+        display: none;
+        animation-duration: 2s;
+    }
+}
+
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+
