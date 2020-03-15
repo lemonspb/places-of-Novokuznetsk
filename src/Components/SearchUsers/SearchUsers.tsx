@@ -56,7 +56,7 @@ const SearchUsers = ({ listUsers, showSearchUsers, setShowSearchUsers, changeLis
             
                 )
 
-            }):`Пользовать с именем "${userName}" не найден`}
+            }):<div className='search-users__empty'>Пользователь с именем <span>"{userName}"</span> не найден</div>}
 
         </div>
     </div>)

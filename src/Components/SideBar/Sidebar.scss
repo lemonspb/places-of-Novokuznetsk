@@ -5,13 +5,13 @@
     left: auto;
     right: auto;
     bottom: 0;
-    width: 17rem;
+    width: 16rem;
     z-index: 401;
     box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
 
     &__toggle {
         position: absolute;
-        left: 272px;
+        left: 256px;
         top: 50px;
         cursor: pointer;
         background: rgba(255, 255, 255, .85);
@@ -186,7 +186,7 @@
 }
 
 .active-menu-true {
-    transform: translateX(-273px);
+    transform: translateX(-256px);
     transition: all 300ms ease-in-out;
 }
 

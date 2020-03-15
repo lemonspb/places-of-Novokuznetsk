@@ -52,6 +52,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     }
+    &__empty{
+        font-size: 20px;
+        span{
+            color: #ffffff;
+            font-weight: 700; 
+        }
+    }
 }
 
 
