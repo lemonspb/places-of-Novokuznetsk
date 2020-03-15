@@ -92,6 +92,12 @@
         color: #000000;
         text-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
         font-size: 1.5rem;
+        span{
+            font-size: 12px;
+            color: tomato;
+            cursor: pointer;
+            margin-left: 20px;
+        }
     }
 
     &__see-all {

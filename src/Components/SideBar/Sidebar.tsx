@@ -128,7 +128,7 @@ const SideBar = (props: SidebarProp) => {
       listPlace={props.listPlace}
       />}
 
-<SearchUsers listUsers={place}  showSearchUsers={showSearchUsers}/>
+<SearchUsers listUsers={place}  changeList={ props.changeList} showSearchUsers={showSearchUsers} setShowSearchUsers={setShowSearchUsers}/>
       </>
    
   );
