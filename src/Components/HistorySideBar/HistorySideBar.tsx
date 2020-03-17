@@ -1,7 +1,7 @@
 import React, { useState,useEffect, useContext } from 'react'
 import { AuthContext } from "../Auth/Auth"
 import './HistorySideBar.scss'
-import { List, Avatar, Icon } from 'antd';
+import { Avatar, Icon } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import CommentList from '../CommentList/CommentList'
@@ -41,7 +41,7 @@ const HistorySideBar = (props: HistorySideBar) => {
         return () => {
           setCommentList([])
         };
-      }, [props.storyFromMarker.answers]);
+      }, [props.storyFromMarker]);
 
 
     return (
@@ -101,22 +101,20 @@ const HistorySideBar = (props: HistorySideBar) => {
                                         && <Icon type="delete" className='history-sidebar__delete'
                                             onClick={() => { props.deleteComment(props.storyFromMarker); props.setStoryFromMarker('') }} />}
                                 </div>
-
-
                             </Scrollbars>
                         </div>
                     </TabPanel>
                     <TabPanel>
                         <div className='history-sidebar__tabPanel'>
+                             
                             <CommentList
-                                commentList={commentList}
-                             storyFromMarker={props.storyFromMarker} setStoryFromMarker={props.setStoryFromMarker} />
+                             commentList={commentList}
+                             storyFromMarker={props.storyFromMarker} 
+                             setStoryFromMarker={props.setStoryFromMarker} />
                         </div>
                     </TabPanel>
                 </Tabs>
-
             </div>
-
         </>
     );
 }

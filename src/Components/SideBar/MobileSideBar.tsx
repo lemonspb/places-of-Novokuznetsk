@@ -18,7 +18,7 @@ const MobileSideBar = (props: SidebarProp) => {
 
   return (
     <>
- dsfds
+
 
     </>
   );
