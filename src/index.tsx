@@ -13,7 +13,7 @@ import 'swiper/css/swiper.css'
 
 
 ReactDOM.render(
-    <AuthProvider>
+     <AuthProvider>
 <Router>  
 <Route  path='/'  exact component ={App}/>
 <Route  path='/signup'  exact render={ ()=> <WrappedRegistration />}/>
