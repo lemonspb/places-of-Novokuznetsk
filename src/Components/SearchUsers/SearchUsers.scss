@@ -1,0 +1,69 @@
+.search-users{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 1.5rem 1rem;;
+    background-color: #efc034;
+    &--active{
+        display: block;
+        animation-name: zoom;
+        animation-duration: 300ms;
+        transform-origin: 10% 5% 40px;
+
+    }
+    &--hidden{
+        display: none;
+    }
+    &__top{
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .ant-input-search{
+            width: 500px !important;
+        }
+        .ant-btn{
+            position: absolute;
+            left: 15px;
+        }
+    }
+    &__list{
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        max-width: 500px;
+    }
+    &__user{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        text-align: center;
+
+
+    }
+    &__name{
+    margin-top: 5px;
+    width: 70px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+    &__empty{
+        font-size: 20px;
+        span{
+            color: #ffffff;
+            font-weight: 700; 
+        }
+    }
+}
+
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+

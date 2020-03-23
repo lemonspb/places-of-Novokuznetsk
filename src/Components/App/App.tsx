@@ -30,15 +30,18 @@ const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [markerInfo, setMarkerInfo] = useState<any>([])
   const [currentUserComments, setCurrentUserComments] = useState<any>([])
-  const [openNote, setOpenNote] = useState<any>();
+  const [storyFromMarker, setStoryFromMarker] = useState()
   const [zoomMap, setZoomMap] = useState(11)
   const corner1 = Leaflet.latLng(53.541547, 87.496044)
   const corner2 = Leaflet.latLng(53.957547, 86.911044)
   const [latLng, setLatLng] = useState<any>([])
+  const [closeSideBar, setCloseSideBar] = useState(false)
   const bounds = Leaflet.latLngBounds(corner1, corner2)
   const { currentUser } = useContext(AuthContext);
   const mapRef: any = useRef(null)
   const groupRef: any = useRef(null)
+
+  console.log(storyFromMarker)
 
   const mapPromise = (array: any) => {
     return new Promise((resolve) => {
@@ -48,8 +51,8 @@ const App: React.FC = () => {
   }
 
   const mapGet = (e:any) => {
-    let arr = {}
-    arr = {
+
+  let arr = {
       lat: e.latlng.lat,
       lng: e.latlng.lng
     }
@@ -70,7 +73,6 @@ const App: React.FC = () => {
   const changeList = (id: string) => {
     const group = groupRef.current.leafletElement
     const map = mapRef.current.leafletElement
-
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
 
       const listUsers = snapshot.val()
@@ -90,14 +92,13 @@ const App: React.FC = () => {
   }
 
   const goToMarker = (element: IComment) => {
-        mapRef.current.leafletElement.panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
-        setOpenNote(element) 
-        setZoomMap(19);
-
+              mapRef.current.leafletElement
+              .panTo(new Leaflet.LatLng(element.latLng.lat, element.latLng.lng))
+              setZoomMap(19);
   }
 
   useEffect(() => {
-
+    
     firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
       const notes = snapshot.val()
 
@@ -119,8 +120,17 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Header />
-      <SideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
-      <MobileSideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo} />
+      <SideBar 
+      goToMarker={goToMarker} 
+      changeList={changeList} 
+      listPlace={markerInfo} 
+      setStoryFromMarker={setStoryFromMarker} 
+      storyFromMarker={storyFromMarker}
+      setCloseSideBar={setCloseSideBar}
+      closeSideBar={closeSideBar}
+      deleteComment={deleteComment}
+      />
+      <MobileSideBar goToMarker={goToMarker} changeList={changeList} listPlace={markerInfo}  />
       <LeafletMap
         ref={mapRef}
         onClick={mapGet}
@@ -148,13 +158,20 @@ const App: React.FC = () => {
         <FeatureGroup ref={groupRef}>
           {markerInfo && markerInfo.map((el: any,i:number) => {
             return (
-                <CustomMarker element={el} currentUserComments={currentUserComments} deleteComments={deleteComment} openNote={openNote} setOpenNote={setOpenNote} key={i} />
+                <CustomMarker 
+                element={el} 
+                storyFromMarker={storyFromMarker} 
+                setStoryFromMarker={setStoryFromMarker} 
+                setCloseSideBar={setCloseSideBar}/>
             )
 
           })}
         </FeatureGroup>
       </LeafletMap>
-      <ModalMap modalOpen={modalOpen} modalClose={modalClose} latLng={latLng} />
+      <ModalMap 
+      modalOpen={modalOpen} 
+      modalClose={modalClose} 
+      latLng={latLng} />
     </div>
   );
 }

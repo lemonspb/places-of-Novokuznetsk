@@ -4,17 +4,23 @@ import './Sidebar.scss'
 import { List, Avatar, Icon } from 'antd';
 import Swiper from 'react-id-swiper';
 import { Scrollbars } from 'react-custom-scrollbars';
-
+import HistorySideBar from '../HistorySideBar/HistorySideBar';
+import SearchUsers from '../SearchUsers/SearchUsers'
 export interface SidebarProp {
   goToMarker: Function
   changeList: Function
   listPlace: any
+  setStoryFromMarker: any,
+  storyFromMarker: any
+  closeSideBar: any,
+  setCloseSideBar: any,
+  deleteComment: any
 }
 
 
 const SideBar = (props: SidebarProp) => {
   const [place, setPlace] = useState<any>([])
-  const [closesideBar, setCloseSideBar] = useState(false)
+  const [showSearchUsers, setShowSearchUsers] = useState(false)
   let tmpArray: any = [];
   const params = {
     slidesPerView: 3,
@@ -30,9 +36,6 @@ const SideBar = (props: SidebarProp) => {
     renderNextButton: () => <div className="swiper-button-next"><Icon type="right" /></div>,
   }
 
-  const closeSideBar = () => {
-    setCloseSideBar(!closesideBar)
-  }
 
   useEffect(() => {
 
@@ -57,27 +60,28 @@ const SideBar = (props: SidebarProp) => {
   return (
     <>
       <div className={`sidebar 
-      ${closesideBar 
+      ${props.closeSideBar 
       ? 'active-menu-true' 
       : 'active-menu-false'}`}>
-        <div onClick={closeSideBar} className='sidebar__toggle'>
+        <div onClick={() => props.setCloseSideBar(!props.closeSideBar)} className='sidebar__toggle'>
           <Icon type="caret-right" className={`
-          ${closesideBar 
+          ${props.closeSideBar 
           ? 'sidebar__toggle--open' 
           : 'sidebar__toggle--close'}`} />
           </div>
         <div className='sidebar__inner'>
           <div className='sidebar__list sidebar-list sidebar-list--history' >
-            <div className='sidebar-list__title'>Истории</div>
+            <div className='sidebar-list__title'>Истории  <span onClick={()=>setShowSearchUsers(true)}>Поиск</span></div>
             <div className='sidebar-list__swiper'>
 
               <Swiper {...params} >
                 {place.filter((item: any) => itemCheck(item.userId)).map((el: any, i: number) => {
+                  ///if userId all list items is the same as the active
+                  let activeUserList = props.listPlace.every((info: any) => info.userId === el.userId)
                   return (
                     <div className='sidebar-list__user' onClick={(() => props.changeList(el.userId))} key={i}>
-
-                      {el.avatar ? <Avatar size="large" src={el.avatar} /> : <Avatar size="large" icon="user" />}
-
+                      <Avatar size="large" icon="user" src={el.avatar} className={`sidebar-list__avatar 
+                     ${activeUserList ? 'sidebar-list__avatar--active' : ''}`} />
                       <span className='sidebar-list__name'>{el.username ? el.username : 'неизвестно'}</span>
                     </div>
                   )
@@ -99,7 +103,9 @@ const SideBar = (props: SidebarProp) => {
                 {props.listPlace.length !== 0 &&
                   props.listPlace.map((el: any, i: number) => {
                   return (
-                    <div className='sidebar-list__item' onClick={() => props.goToMarker(el)} key={i}>
+                    <div className={`sidebar-list__item 
+                    ${props.storyFromMarker?.commentId === el.commentId  ?`sidebar-list__item--active`:''}`} 
+                    onClick={() => {props.goToMarker(el);props.setStoryFromMarker(el)}} key={i}>
                       {i + 1}. {el.place}
 
                     </div>
@@ -112,7 +118,19 @@ const SideBar = (props: SidebarProp) => {
 
         </div>
       </div>
-    </>
+      {props.storyFromMarker && 
+      <HistorySideBar 
+      setStoryFromMarker={props.setStoryFromMarker} 
+      storyFromMarker={props.storyFromMarker}  
+      setCloseSideBar={props.setCloseSideBar} 
+      closeSideBar={props.closeSideBar} 
+      deleteComment={props.deleteComment}
+      listPlace={props.listPlace}
+      />}
+
+<SearchUsers listUsers={place}  changeList={ props.changeList} showSearchUsers={showSearchUsers} setShowSearchUsers={setShowSearchUsers}/>
+      </>
+   
   );
 }
 

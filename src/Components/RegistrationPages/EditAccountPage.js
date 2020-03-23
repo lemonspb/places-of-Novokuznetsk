@@ -12,6 +12,7 @@ const EditAccountPage = (props) => {
   const { currentUser } = useContext(AuthContext);
   const [newName, setNewName] = useState([]);
   const [imageFile, setImageFile] = useState()
+  const [saveInfo,setSaveInfo] = useState('')
   const getImage = (fileImg)=>{
     setImageFile(fileImg)
   }
@@ -29,6 +30,7 @@ const EditAccountPage = (props) => {
             currentUser.updateProfile({
               photoURL: url
             }).then(() => {
+              setSaveInfo('Профиль изменен!')
               firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
                 const listUsers = snapshot.val()
                 for (let variable in listUsers) {
@@ -54,6 +56,7 @@ const EditAccountPage = (props) => {
           user.updateProfile({
             displayName: values.name
           }).then(() => {
+            setSaveInfo('Профиль изменен!')
             firebases.database().ref('placeNVKZ/').on('value', (snapshot) => {
               const listUsers = snapshot.val()
               for (let variable in listUsers) {
@@ -61,6 +64,14 @@ const EditAccountPage = (props) => {
                   newName.push(variable)
                   setNewName(newName)
                 }
+              }
+              for (let variable in listUsers) {
+                firebases.database().ref(`placeNVKZ/${variable}`).on('value', (snapshot) => {
+                  const listUsers = snapshot.val()
+                  if(listUsers.answers){
+                  
+                  }
+              })
               }
             });
             newName.forEach((el) => {
@@ -96,8 +107,8 @@ const EditAccountPage = (props) => {
         <Button type='primary' htmlType="submit" >сохранить</Button>
         <Button type='primary'><Link to='/'>на главную</Link></Button>
 
-      </Form>
-
+      </Form> 
+            <div className='form-wrap__info-save'>{saveInfo}</div>
     </div>
   );
 };

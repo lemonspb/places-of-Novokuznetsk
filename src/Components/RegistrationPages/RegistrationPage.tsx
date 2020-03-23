@@ -7,7 +7,7 @@ import './ RegistrationPage.scss'
 const SignUp = (props: any) => {
 
   const { currentUser } = useContext(AuthContext);
-  const [registerError, setRegisterError] = useState()
+  const [registerError, setRegisterError] = useState('')
 
   const handleSignUp = useCallback(event => {
 
@@ -19,13 +19,17 @@ const SignUp = (props: any) => {
         firebases
           .auth()
           .createUserWithEmailAndPassword(values.email, values.password).catch(function (error) {
+            if(error.code === "auth/weak-password"){
+              setRegisterError('Пароль должен состаять хотя бы из 6 символов')  
+            }
+            else{
+              setRegisterError('Эта почта уже используется другим аккаунтом')  
 
-            setRegisterError('Этот email  уже используется другим аккаунтом!')
+            }
+
 
           });
-
       }
-
     })
 
   }, [props.form]);
